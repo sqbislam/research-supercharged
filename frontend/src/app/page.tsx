@@ -4,7 +4,7 @@ import Head from 'next/head';
 import * as React from 'react';
 import '@/lib/env';
 
-import UnderlineLink from '@/components/links/UnderlineLink';
+import Hero from './hero';
 
 /**
  * SVGR Support
@@ -20,16 +20,7 @@ export default function HomePage() {
       <Head>
         <title>Research Supercharged</title>
       </Head>
-      <section>
-        <div className='layout relative flex min-h-screen flex-col items-center justify-center py-12 text-center'>
-          <footer className='absolute bottom-2 text-gray-700'>
-            © {new Date().getFullYear()} By{' '}
-            <UnderlineLink href='https://saqib-islam.com'>
-              Saqib Islam
-            </UnderlineLink>
-          </footer>
-        </div>
-      </section>
+      <Hero />
     </main>
   );
 }

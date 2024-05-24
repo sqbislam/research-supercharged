@@ -12,14 +12,14 @@ import { ThemeToggle } from '../ui/theme-toggle';
 
 export default function Navbar() {
   return (
-    <nav className='w-full absolute top-0 p-4 flex justify-between items-center'>
+    <nav className='w-full top-0 p-4 flex justify-between items-center'>
       <h3>Research Super</h3>
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <Link href='/docs' legacyBehavior passHref>
+            <Link href='/research' legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Home
+                Research
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
@@ -38,8 +38,8 @@ export default function Navbar() {
             </Link>
           </NavigationMenuItem>
         </NavigationMenuList>
+        <ThemeToggle />
       </NavigationMenu>
-      <ThemeToggle />
     </nav>
   );
 }

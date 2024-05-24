@@ -7,6 +7,7 @@ import Navbar from '@/components/nav/navbar';
 
 import { siteConfig } from '@/constant/config';
 import { ThemeProvider } from '@/providers/theme-provider';
+import Footer from './footer';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -64,6 +65,7 @@ export default function RootLayout({
           <>
             <Navbar />
             {children}
+            <Footer />
           </>
         </ThemeProvider>
       </body>
