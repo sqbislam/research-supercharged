@@ -1,22 +1,35 @@
-# syntax=docker/dockerfile:1
-FROM python:3.12
+# 第一阶段：使用 Poetry 安装依赖
+FROM python:3.11-rc-slim as builder
 
-RUN apt-get update && \
-apt-get upgrade -y && \
-python -m pip install --upgrade pip
+WORKDIR /app
 
-WORKDIR /usr/src/my_service
-COPY app app/
-COPY pyproject.toml .
-COPY poetry.lock .
-RUN pip install poetry==1.8 && \
-poetry export -f requirements.txt --output requirements.txt && \
-pip install -r requirements.txt
+RUN pip install poetry
 
-RUN groupadd -g 999 apiuser && \
-useradd -r -u 999 -g apiuser apiuser
-USER apiuser
+COPY poetry.lock  pyproject.toml /app/
+# TODO: login docker register plugin
+# 安装依赖，忽略项目本身
+RUN poetry config virtualenvs.create false \
+    && poetry install --no-dev --no-root
 
-EXPOSE 8000
+# 第二阶段：构建最终镜像
+FROM python:3.11-rc-slim
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+ENV PYTHONPATH=/app/src
+WORKDIR /app
+
+# 从 builder 阶段复制安装好的依赖
+COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=builder /usr/local/bin /usr/local/bin
+
+# 复制整个项目到容器中
+COPY . /app
+
+# 设置环境变量
+ENV PORT=5000
+
+
+# 暴露端口
+EXPOSE 5000
+
+# 运行 FastAPI 应用
+CMD ["uvicorn", "src.app.main:app", "--host", "0.0.0.0", "--port", "5000"]
