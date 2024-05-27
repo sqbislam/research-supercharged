@@ -1,45 +1,17 @@
-# Youtube Flashcards
+# Next.js + Tailwind CSS + TypeScript Starter and Boilerplate
 
-An AI powered Youtube summarizer that converts complex youtube video content into bite-sized flashcards for ease of consumption and learning.
-
-
-### How to use
-
-For now run in local development environment by cloning project. Deployed at [https://youtube-flashcards.vercel.app/](https://youtube-flashcards.vercel.app/)
-
-Demo
-
-![Demo Image](./frontend/youtube-flashcards/src/assets/sample.png)
+<div align="center">
+  <h2>🔋 Research Supercharged</h2>
+  <h5>Supercharge your research with this feature packed application!</h5>
+  <p>Next.js + Tailwind CSS + TypeScript + Langchain + GCP</p>
+  <p>Made by <a href="https://saqib-islam.com">Saqib Islam</a></p>
 
 
-### Technologies
-- Gemini LLM
-- LangChain
-- ReactTS
-- FastAPI
+</div>
+
+## Features
 
 
 
+## Getting Started
 
-
-<!-- ## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list -->
