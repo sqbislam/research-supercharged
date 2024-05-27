@@ -6,13 +6,20 @@ from typing import ClassVar
 # request
 # Properties to receive on item creation
 # in
+
+class ArticlesAssign(CreateBase):
+    articles: list[dict]
+    project_id: int
+    
 class ArticleCreate(CreateBase):
     title: Optional[str] = None
     authors: Optional[str] = None
     link: Optional[str] = None
     abstract: Optional[str] = None
     category: Optional[str] = None
-
+    published_date: Optional[datetime] = None
+    journal_ref: Optional[str] = None
+    doi: Optional[str] = None
 
 # Properties to receive on item update
 # in
@@ -33,7 +40,9 @@ class Article(ResponseBase):
     link: Optional[str] = None
     abstract: Optional[str] = None
     category: Optional[str] = None
-
+    published_date: Optional[datetime] = None
+    journal_ref: Optional[str] = None
+    doi: Optional[str] = None
     table_name: ClassVar[str] = "articles"
 
 
@@ -44,4 +53,7 @@ class ArticleInDB(InDBBase):
     link: Optional[str] = None
     abstract: Optional[str] = None
     category: Optional[str] = None
-
+    published_date: Optional[datetime] = None
+    journal_ref: Optional[str] = None
+    doi: Optional[str] = None
+    project_id: int 

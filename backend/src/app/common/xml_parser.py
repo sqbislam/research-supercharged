@@ -8,18 +8,25 @@ class XMLParser():
             # Parse XML and return data
             res = []
             myroot = ET.fromstring(xml_data)
-            print(myroot)
+            # Extract data from XML entry
             for x in myroot.findall('.//atom:entry', namespace):
-                print(x)
                 title =x.find('.//atom:title', namespace).text
                 summary = x.find('.//atom:summary', namespace).text
                 doi = x.find('.//arxiv:doi', namespace).text
-                link = x.find('.//atom:link', namespace).attrib['href']
+                category = x.find('.//arxiv:primary_category', namespace).attrib.get('term')
+                link = x.findall('.//atom:link', namespace)
+                journal_ref = x.find('.//arxiv:journal_ref', namespace).text
+
+                # Extract pdf link
+                for l in link:
+                    if l.attrib.get('title') and l.attrib['title'] == 'pdf':
+                        link = l.attrib.get('href')
+                # Extract authors           
                 author_all = x.findall('.//atom:author/atom:name', namespace)
                 authors = []
                 for author in author_all:
                     authors.append(author.text)
-                res.append([{'title': title, 'summary': summary, 'doi': doi, 'link': link, 'authors': authors}])
+                res.append({'title': title, 'abstract': summary, 'doi': doi, 'link': link, 'authors': str(authors), 'category': category, 'journal_ref':journal_ref})
         except:
             logging.error("Error in parsing XML data")
         return res

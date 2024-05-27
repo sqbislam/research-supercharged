@@ -36,7 +36,7 @@ class Project(ResponseBase):
     description: Optional[str] = None
     keywords: Optional[str] = None
     is_deleted: Optional[bool] = None
-
+    articles: Optional[list] = None
     table_name: ClassVar[str] = "projects"
 
 
