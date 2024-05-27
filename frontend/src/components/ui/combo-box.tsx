@@ -42,15 +42,7 @@ const frameworks = [
   },
 ];
 
-export function Combobox({
-  name,
-  description,
-  placeholder,
-}: {
-  name?: string;
-  description?: string;
-  placeholder?: string;
-}) {
+export function ComboboxDemo() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState('');
 
@@ -78,7 +70,7 @@ export function Combobox({
               <CommandItem
                 key={framework.value}
                 value={framework.value}
-                onSelect={(currentValue: any) => {
+                onSelect={(currentValue) => {
                   setValue(currentValue === value ? '' : currentValue);
                   setOpen(false);
                 }}
