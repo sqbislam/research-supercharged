@@ -26,7 +26,6 @@ export async function POST(request: Request) {
       method: 'POST',
       data: body,
     });
-
     return NextResponse.json(data, { status: 201 });
   } catch (error: any) {
     return NextResponse.json({ error: error.toString() }, { status: 500 });

@@ -58,7 +58,7 @@ export default function RootLayout({
 }) {
   return (
     <html>
-      <body>
+      <body className='relative w-full min-h-[100vh]'>
         <ThemeProvider
           attribute='class'
           defaultTheme='system'

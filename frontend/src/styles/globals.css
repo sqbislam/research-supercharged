@@ -118,6 +118,7 @@
   }
   /* #endregion  /**======== Typography =========== */
 
+
   .layout {
     /* 1100px */
     max-width: 68.75rem;
@@ -131,6 +132,9 @@
   /* Class to adjust with sticky footer */
   .min-h-main {
     @apply min-h-[calc(100vh-56px)];
+  }
+  .card-hover-anim {
+    @apply transition-transform transform hover:scale-105 hover:shadow-xl duration-300 hover:bg-primary-foreground/20 cursor-pointer;
   }
 }
 

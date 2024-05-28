@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { z } from 'zod';
 
@@ -17,7 +18,6 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-
 const schema = z.object({
   title: z.string().min(2, {
     message: 'Title must be at least 2 characters.',
@@ -41,7 +41,7 @@ export function ProjectForm() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
   };
-
+  const router = useRouter();
   const { onSubmitHandler, form, isLoading } = useForm({
     schema,
     defaultValues,
@@ -50,6 +50,7 @@ export function ProjectForm() {
   });
   const onSubmit = (data: FormData) => {
     toast('Project Created Sucessfully! 🎉');
+    router.push('projects/list');
   };
   return (
     <Form {...form}>

@@ -59,11 +59,12 @@ export interface ProjectUpdate {
 // Properties to return to client
 // CURD model
 export interface Project {
+  id?: number;
   category?: string;
   title?: string;
   description?: string;
   keywords?: string;
   is_deleted?: boolean;
   articles?: Article[]; // Using 'any[]' for the articles list; adjust the type if articles have a specific structure
-  table_name: string;
+  table_name?: string;
 }

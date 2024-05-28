@@ -1,10 +1,11 @@
 'use client';
-
 import { useEffect, useState } from 'react';
 
-import ProjectList from './project-list';
-
-export default function ProjectListPage() {
+export default function ProjectItem({
+  params,
+}: {
+  params: { project_id: string };
+}) {
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -13,7 +14,10 @@ export default function ProjectListPage() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch('/api/projects');
+        const response = await fetch(`/api/projects/${params.project_id}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        });
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -29,17 +33,11 @@ export default function ProjectListPage() {
     };
 
     fetchData();
-  }, []);
+  }, [params]);
 
   if (error) {
     return <div>Error: {error}</div>;
   }
 
-  return (
-    <section>
-      <div className='p-10 max-w-[80%] mx-auto'>
-        <ProjectList projects={data} error={error} loading={loading} />
-      </div>
-    </section>
-  );
+  return <div>{data && <h1>Project: {data.toString()}</h1>}</div>;
 }
