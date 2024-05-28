@@ -17,14 +17,14 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     async def get(self, db: AsyncClient, *, id: str) -> ModelType | None:
         """get by table_name by id"""
         data, count = (
-            await db.table(self.model.table_name).select("*").eq("id", id).execute()
+            await db.table(self.model.table_name).select("*, articles(*)").eq("id", id).execute()
         )
         _, got = data
         return self.model(**got[0]) if got else None
 
     async def get_all(self, db: AsyncClient) -> list[ModelType]:
         """get all by table_name"""
-        data, count = await db.table(self.model.table_name).select("*, articles(*)").execute()
+        data, count = await db.table(self.model.table_name).select("*, articles(*)").order('created_at', desc=True).execute()
         _, got = data
         
         return [self.model(**item) for item in got]

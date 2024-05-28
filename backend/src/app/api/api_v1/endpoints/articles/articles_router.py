@@ -12,8 +12,9 @@ xml_parser = XMLParser()
 
 
 @router.get("/fetch")
-async def fetch_articles():
-    url = 'http://export.arxiv.org/api/query?search_query=all:electron&start=0&max_results=2'
+async def fetch_articles(search_query: str, start: int = 0, max_results: int=10):
+    
+    url = f'http://export.arxiv.org/api/query?search_query=all:"{search_query.replace(" ", "%20")}"&start={start}&max_results={max_results}'
     data = urllib.request.urlopen(url)
     res = data.read().decode('utf-8')
     parsed_data = await xml_parser.parse(res)

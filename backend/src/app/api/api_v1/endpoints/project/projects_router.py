@@ -16,3 +16,6 @@ async def create_project(project_in: ProjectCreate, session: SessionDep):
 async def get_projects(session: SessionDep) -> list[Project]:
      return await project.get_all(session)
 
+@router.get("/{project_id}")
+async def get_project(project_id: int, session: SessionDep) -> Project:
+    return await project.get(session, id=project_id)
