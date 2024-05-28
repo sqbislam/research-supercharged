@@ -37,7 +37,7 @@ export default function ProjectListPage() {
 
   return (
     <section>
-      <div className='p-10 max-w-[80%] mx-auto'>
+      <div className='section-inner'>
         <ProjectList projects={data} error={error} loading={loading} />
       </div>
     </section>

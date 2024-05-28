@@ -116,6 +116,9 @@
   .p {
     @apply font-primary text-sm md:text-base;
   }
+  section{
+    @apply min-h-main
+  }
   /* #endregion  /**======== Typography =========== */
 
 
@@ -128,14 +131,24 @@
   .bg-dark a.custom-link {
     @apply border-gray-200 hover:border-gray-200/0;
   }
-
+  
   /* Class to adjust with sticky footer */
   .min-h-main {
-    @apply min-h-[calc(100vh-56px)];
+    @apply min-h-[calc(100vh-70px)];
+  }
+  .header-two-col {
+    @apply flex flex-row justify-between items-center gap-1
+  }
+  .section-inner{
+    @apply p-10 w-full md:max-w-[80%] mx-auto 
   }
   .card-hover-anim {
     @apply transition-transform transform hover:scale-105 hover:shadow-xl duration-300 hover:bg-primary-foreground/20 cursor-pointer;
   }
+  .card-hover-anim:focus-visible {
+    @apply transition-transform transform focus-visible:scale-105 focus-visible:shadow-xl duration-300 focus-visible:bg-primary-foreground/20 cursor-pointer;
+  }
+
 }
 
 

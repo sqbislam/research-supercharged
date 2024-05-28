@@ -236,3 +236,10 @@ export const categories_cs = [
       'cs.SY is an alias for eess.SY. This section includes theoretical and experimental research covering all facets of automatic control systems. The section is focused on methods of control system analysis and design using tools of modeling, simulation and optimization. Specific areas of research include nonlinear, distributed, adaptive, stochastic and robust control in addition to hybrid and discrete event systems. Application areas include automotive and aerospace control systems, network control, biological systems, multiagent and cooperative control, robotics, reinforcement learning, sensor networks, control of cyber-physical and energy-related systems, and control of computing systems.',
   },
 ];
+
+export function getCategories(tag: string) {
+  const cat = categories_cs.find(
+    (category) => category.value.toLowerCase() === tag
+  );
+  return cat?.label;
+}

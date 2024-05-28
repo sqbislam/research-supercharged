@@ -1,11 +1,20 @@
-'use client';
+import Link from 'next/link';
 
-import { ProjectForm } from './project-form';
+import { Button } from '@/components/ui/button';
 
-export default function ProjectPage() {
+export default function ProjectDashboard() {
   return (
     <section className='h-full'>
-      <ProjectForm />
+      <div className='section-inner'>
+        <h4>Project Dashboard</h4>
+
+        <Link href='/projects/list'>
+          <Button>List</Button>
+        </Link>
+        <Link href='/projects/create'>
+          <Button>Create</Button>
+        </Link>
+      </div>
     </section>
   );
 }

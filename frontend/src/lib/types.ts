@@ -30,11 +30,11 @@ export interface ArticleUpdate {
 
 export interface Article {
   title?: string;
-  authors?: string;
+  authors?: string[];
   link?: string;
   abstract?: string;
   category?: string;
-  published_date?: Date;
+  published_date?: string;
   journal_ref?: string;
   doi?: string;
 }

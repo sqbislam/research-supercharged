@@ -11,6 +11,7 @@ import { ThemeProvider } from '@/providers/theme-provider';
 import ToastProvider from '@/providers/toast-provider';
 
 import Footer from './footer';
+import { ModalProvider } from '@/providers/modal-provider';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -67,7 +68,9 @@ export default function RootLayout({
         >
           <ToastProvider>
             <Navbar />
-            {children}
+            <React.Suspense fallback={<div>Loading...</div>}>
+              <ModalProvider>{children}</ModalProvider>
+            </React.Suspense>
             <Footer />
           </ToastProvider>
         </ThemeProvider>
