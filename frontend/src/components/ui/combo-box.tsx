@@ -1,9 +1,14 @@
 'use client';
 
-import { Label } from '@radix-ui/react-dropdown-menu';
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
 import * as React from 'react';
+import {
+  ControllerFieldState,
+  ControllerRenderProps,
+  UseFormStateReturn,
+} from 'react-hook-form';
 
+import { categories_cs } from '@/lib/constants/category_constants';
 import { cn } from '@/lib/utils';
 
 import { Button } from '@/components/ui/button';
@@ -20,12 +25,25 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 
-import { categories_cs } from '@/app/api/constants/category_constants';
-
-export function ComboboxDemo() {
+export function ComboboxDemo(props: {
+  field: ControllerRenderProps<
+    {
+      title: string;
+      category: string;
+      keywords: string;
+      description: string;
+    },
+    'category'
+  >;
+  fieldState: ControllerFieldState;
+  formState: UseFormStateReturn<any>;
+}) {
+  const { field } = props;
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState('');
-
+  const onValueChange = (value: string) => {
+    field.onChange(value);
+  };
   return (
     <div className='w-full flex flex-col justify-center'>
       <Popover open={open} onOpenChange={setOpen}>
@@ -34,7 +52,7 @@ export function ComboboxDemo() {
             variant='outline'
             role='combobox'
             aria-expanded={open}
-            className='max-w-[400px] w-full justify-between'
+            className='w-full justify-between'
           >
             {value
               ? categories_cs.find(
@@ -54,7 +72,7 @@ export function ComboboxDemo() {
                   key={framework.value}
                   value={framework.value}
                   onSelect={(currentValue) => {
-                    console.debug({ value });
+                    onValueChange(currentValue);
                     setValue(currentValue === value ? '' : currentValue);
                     setOpen(false);
                   }}

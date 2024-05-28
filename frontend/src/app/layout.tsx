@@ -2,11 +2,14 @@ import { Metadata } from 'next';
 import * as React from 'react';
 
 import '@/styles/globals.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Navbar from '@/components/nav/navbar';
 
 import { siteConfig } from '@/constant/config';
 import { ThemeProvider } from '@/providers/theme-provider';
+import ToastProvider from '@/providers/toast-provider';
+
 import Footer from './footer';
 
 export const metadata: Metadata = {
@@ -62,11 +65,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <>
+          <ToastProvider>
             <Navbar />
             {children}
             <Footer />
-          </>
+          </ToastProvider>
         </ThemeProvider>
       </body>
     </html>

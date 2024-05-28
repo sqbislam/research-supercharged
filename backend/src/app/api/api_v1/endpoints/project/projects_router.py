@@ -8,11 +8,11 @@ router = APIRouter()
 
 
 
-@router.post("/projects/create")
+@router.post("/create")
 async def create_project(project_in: ProjectCreate, session: SessionDep):
     return await project.create(session, obj_in=project_in)
 
-@router.get("/projects/")
+@router.get("/")
 async def get_projects(session: SessionDep) -> list[Project]:
      return await project.get_all(session)
 
