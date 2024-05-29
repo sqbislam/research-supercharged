@@ -5,6 +5,8 @@ import logging
 from langchain_community.document_loaders import PDFMinerLoader
 import uuid
 
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
 class DocumentProcessor:
     """
     This class encapsulates the functionality for processing uploaded PDF documents using Streamlit
@@ -26,13 +28,11 @@ class DocumentProcessor:
         if self.urls is not None:
             for url in self.urls:
                 logging.info("Processing document from URL... ", url)
-                # Generate a unique identifier to append to the file's original name
-                unique_id = uuid.uuid4().hex
-
+              
                 # Step 2: Process the temporary file
                 try:
                     loader = PDFMinerLoader(url)
-                    extracted_pages = loader.load_and_split()
+                    extracted_pages = loader.load_and_split(RecursiveCharacterTextSplitter(chunk_size=2000))
                     logging.info(f"Loaded {len(extracted_pages)} pages from {url}")
                 except Exception as e:
                     print(f"Error loading {url}: {e}")

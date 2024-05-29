@@ -6,9 +6,10 @@ import { Article, Project } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 
+import { useProjectData } from './project-data-context';
 import { ProjectTabs } from './project-tabs';
 import ArticleCard from '../articles/article-card';
-import { useProjectData } from './project-data-context';
+import { Button } from '../ui/button';
 
 export default function ProjectItem({ projects }: { projects: Project }) {
   const { data, commitArticles, addArticleToCommit } = useProjectData();
@@ -33,12 +34,14 @@ export default function ProjectItem({ projects }: { projects: Project }) {
                 </p>
 
                 <div className='header-two-col border-t-2 border-primary py-3'>
-                  <h4>Articles added</h4>
-                  <h6>
-                    {data.articles
-                      ? data.articles.length + commitArticles.length
-                      : 0}
-                  </h6>
+                  <h4>
+                    Articles added{': '}
+                    <span className='text-sm'>
+                      {data.articles
+                        ? data.articles.length + commitArticles.length
+                        : 0}
+                    </span>
+                  </h4>
                 </div>
                 <div className='divide-y'>
                   {commitArticles.length > 0 &&

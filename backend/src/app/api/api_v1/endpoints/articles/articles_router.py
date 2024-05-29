@@ -6,6 +6,7 @@ from fastapi import APIRouter
 import urllib, urllib.request
 from app.common.xml_parser import XMLParser
 from app.crud import article
+from fastapi.responses import PlainTextResponse
 
 
 router = APIRouter()
@@ -30,7 +31,7 @@ async def create_articles(data: ArticlesAssign, session: SessionDep):
     res = await article.create(session, obj_in=res_articles)
     return res
 
-@router.post("/extract/")
+@router.post("/extract/", response_class=PlainTextResponse)
 async def extract_articles(data: list[ArticleCreate], session: SessionDep):
     urls = [a.link for a in data]
     researcher = Researcher(urls)

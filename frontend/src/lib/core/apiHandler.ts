@@ -18,6 +18,7 @@ const apiHandler = async <T>(config: ApiRequestConfig): Promise<T> => {
       data: config.data,
       params: config.params,
       headers: config.headers,
+      timeout: 50000,
     });
 
     return response.data;

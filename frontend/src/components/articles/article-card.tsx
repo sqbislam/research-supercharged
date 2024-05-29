@@ -2,13 +2,12 @@
 import { ArrowBigLeftDash, FileText } from 'lucide-react';
 import moment from 'moment';
 import { createRef } from 'react';
+import { useState } from 'react';
 
 import { Article } from '@/lib/types';
 
 import Modal from '@/components/Modal';
 import PDFViewer from '@/components/PdfViewer';
-
-import { useState } from 'react';
 
 import ArticleMenu from './article-menu';
 export default function ArticleCard({
