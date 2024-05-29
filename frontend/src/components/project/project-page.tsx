@@ -1,31 +1,18 @@
 'use client';
 
-import { useState } from 'react';
-import { toast } from 'react-toastify';
-
 import { getCategories } from '@/lib/constants/category_constants';
 import { Article, Project } from '@/lib/types';
 
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 
-import ArticleCard from '../articles/article-card';
-import ArticlesList from '../articles/articles-list';
 import { ProjectTabs } from './project-tabs';
+import ArticleCard from '../articles/article-card';
+import { useProjectData } from './project-data-context';
+
 export default function ProjectItem({ projects }: { projects: Project }) {
-  const [data] = useState<Project>(projects);
+  const { data, commitArticles, addArticleToCommit } = useProjectData();
 
-  const [commitArticles, setCommitArticles] = useState<Article[]>([]);
-
-  const addArticleToCommit = (article: Article) => {
-    // Only append articles which are not already present in the array based on uid
-    if (commitArticles.find((a) => a.uid === article.uid)) {
-      toast.info('Article already added to project');
-      return;
-    } else {
-      setCommitArticles([...commitArticles, article]);
-    }
-  };
   return (
     <section>
       <div className='section-inner'>

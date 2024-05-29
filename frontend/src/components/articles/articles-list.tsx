@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+
 import { Article } from '@/lib/types';
 
 import { Button } from '@/components/ui/button';
@@ -62,9 +63,9 @@ export default function ArticlesList({
       <div className='divide-y max-h-[100vh] overflow-y-auto overflow-x-hidden'>
         {data &&
           data.length > 0 &&
-          data.map((article, index) => (
+          data.map((article: Article, index) => (
             <ArticleCard
-              key={index}
+              key={article.uid || index}
               article={article}
               addArticleToCommit={addArticleToCommit}
             />

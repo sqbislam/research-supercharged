@@ -5,10 +5,12 @@ interface PDFViewerProps {
 }
 
 const PDFViewer: React.FC<PDFViewerProps> = ({ url }) => {
+  console.debug('PDFViewerProps', { url });
   return (
     <div className='pdf-viewer'>
       <iframe
         src={url}
+        key={url}
         title='PDF Viewer'
         style={{
           width: '80vw',

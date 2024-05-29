@@ -1,18 +1,24 @@
 'use client';
 import React from 'react';
 
-import { useModal } from '@/providers/modal-provider';
-
-const Modal = ({ children }: { children: React.ReactNode }) => {
-  const { isOpen, closeModal } = useModal();
+const Modal = ({
+  children,
+  isOpen,
+  closeModal,
+}: {
+  children: React.ReactNode;
+  isOpen: boolean;
+  closeModal: () => void;
+}) => {
   const handleBackgroundClick = (event: any) => {
+    event.preventDefault();
+    event.stopPropagation();
     if (event.target === event.currentTarget) {
       closeModal();
     }
   };
-  if (!isOpen) return null;
 
-  return (
+  return isOpen ? (
     <div
       className='fixed inset-0 bg-black bg-opacity-10 flex items-center justify-center z-50'
       onClick={handleBackgroundClick}
@@ -27,7 +33,6 @@ const Modal = ({ children }: { children: React.ReactNode }) => {
         {children}
       </div>
     </div>
-  );
+  ) : null;
 };
-
 export default Modal;

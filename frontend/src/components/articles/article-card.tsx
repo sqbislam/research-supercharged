@@ -8,7 +8,7 @@ import { Article } from '@/lib/types';
 import Modal from '@/components/Modal';
 import PDFViewer from '@/components/PdfViewer';
 
-import { useModal } from '@/providers/modal-provider';
+import { useState } from 'react';
 
 import ArticleMenu from './article-menu';
 export default function ArticleCard({
@@ -23,7 +23,7 @@ export default function ArticleCard({
 }) {
   const publishedDateString =
     article.published_date && moment(article.published_date).toLocaleString();
-  const { openModal } = useModal();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const articleMenuRef = createRef<HTMLButtonElement>();
   // If the user clicks on the article card, add the article to the commit articless
   const handleArticleClick = () => {
@@ -35,6 +35,9 @@ export default function ArticleCard({
     if (articleMenuRef?.current) {
       articleMenuRef.current?.click();
     }
+  };
+  const openModal = () => {
+    setModalIsOpen(true);
   };
 
   return (
@@ -62,7 +65,10 @@ export default function ArticleCard({
                 >
                   <FileText color='red' size={16} />
                 </span>
-                <Modal>
+                <Modal
+                  isOpen={modalIsOpen}
+                  closeModal={() => setModalIsOpen(false)}
+                >
                   <PDFViewer url={article.link} />
                 </Modal>
               </>

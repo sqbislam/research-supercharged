@@ -1,6 +1,7 @@
 import { Project } from '@/lib/types';
 
-import ProjectItem from '../../../components/project/project-page';
+import { ProjectDataProvider } from '@/components/project/project-data-context';
+import ProjectItem from '@/components/project/project-page';
 const fetchProject = async (params: { project_id: string }) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/projects/${params.project_id}`,
@@ -22,5 +23,11 @@ export default async function ProjectLoader({
 }) {
   const project = await fetchProject(params);
 
-  return <section>{project && <ProjectItem projects={project} />}</section>;
+  return (
+    <section>
+      <ProjectDataProvider project={project}>
+        <ProjectItem projects={project} />
+      </ProjectDataProvider>
+    </section>
+  );
 }
