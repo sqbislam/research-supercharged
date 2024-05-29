@@ -15,6 +15,12 @@ pydantic = {extras = ["email"], version = "^2.7.0"}
 pydantic-settings = "^2.2.1"
 python-multipart = "^0.0.9"
 supabase-py-async = "*"
+chromadb = "*"
+langchain = "*"
+langchain-google-vertexai = "*"
+pypdf = "*"
+langchain-community = "^0.2.1"
+pdfminer-six = "^20231228"
 
 
 [tool.poetry.group.dev.dependencies]

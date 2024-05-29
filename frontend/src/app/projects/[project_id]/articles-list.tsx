@@ -1,12 +1,17 @@
 import { useState } from 'react';
 
 import apiHandler from '@/lib/core/apiHandler';
+import { Article } from '@/lib/types';
 
 import { Button } from '@/components/ui/button';
 
 import ArticleCard from './article-card';
 
-export default function ArticlesList() {
+export default function ArticlesList({
+  addArticleToCommit,
+}: {
+  addArticleToCommit: (article: Article) => void;
+}) {
   const [data, setData] = useState([]);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
@@ -51,7 +56,7 @@ export default function ArticlesList() {
         {data &&
           data.length > 0 &&
           data.map((article, index) => (
-            <ArticleCard key={index} article={article} />
+            <ArticleCard key={index} article={article} addArticleToCommit={addArticleToCommit}/>
           ))}
       </div>
     </div>

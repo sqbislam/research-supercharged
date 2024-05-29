@@ -148,7 +148,7 @@
   .card-hover-anim:focus-visible {
     @apply transition-transform transform focus-visible:scale-105 focus-visible:shadow-xl duration-300 focus-visible:bg-primary-foreground/20 cursor-pointer;
   }
-
+  
 }
 
 

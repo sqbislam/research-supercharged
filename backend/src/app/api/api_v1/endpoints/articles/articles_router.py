@@ -1,6 +1,7 @@
 
 from app.api.deps import SessionDep
-from app.schemas.articles import ArticlesAssign
+from app.schemas.articles import ArticleCreate, ArticlesAssign
+from app.services.researcher import Researcher
 from fastapi import APIRouter
 import urllib, urllib.request
 from app.common.xml_parser import XMLParser
@@ -28,3 +29,10 @@ async def create_articles(data: ArticlesAssign, session: SessionDep):
         res_articles.append(a)
     res = await article.create(session, obj_in=res_articles)
     return res
+
+@router.post("/extract/")
+async def extract_articles(data: list[ArticleCreate], session: SessionDep):
+    urls = [a.link for a in data]
+    researcher = Researcher(urls)
+    response = await researcher.get_summary()
+    return response

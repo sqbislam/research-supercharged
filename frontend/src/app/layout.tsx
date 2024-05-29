@@ -2,16 +2,15 @@ import { Metadata } from 'next';
 import * as React from 'react';
 
 import '@/styles/globals.css';
+import '@/styles/spinner.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Navbar from '@/components/nav/navbar';
 
 import { siteConfig } from '@/constant/config';
-import { ThemeProvider } from '@/providers/theme-provider';
-import ToastProvider from '@/providers/toast-provider';
+import Providers from '@/providers/providers';
 
 import Footer from './footer';
-import { ModalProvider } from '@/providers/modal-provider';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -60,20 +59,11 @@ export default function RootLayout({
   return (
     <html>
       <body className='relative w-full min-h-[100vh]'>
-        <ThemeProvider
-          attribute='class'
-          defaultTheme='system'
-          enableSystem
-          disableTransitionOnChange
-        >
-          <ToastProvider>
-            <Navbar />
-            <React.Suspense fallback={<div>Loading...</div>}>
-              <ModalProvider>{children}</ModalProvider>
-            </React.Suspense>
-            <Footer />
-          </ToastProvider>
-        </ThemeProvider>
+        <Providers>
+          <Navbar />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

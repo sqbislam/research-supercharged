@@ -13,7 +13,7 @@ class ArticlesAssign(CreateBase):
     
 class ArticleCreate(CreateBase):
     title: Optional[str] = None
-    authors: Optional[str] = None
+    authors: Optional[list[str]] = None
     link: Optional[str] = None
     abstract: Optional[str] = None
     category: Optional[str] = None

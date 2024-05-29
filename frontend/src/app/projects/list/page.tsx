@@ -1,44 +1,28 @@
-'use client';
-
-import { useEffect, useState } from 'react';
+import { Project } from '@/lib/types';
 
 import ProjectList from './project-list';
-
-export default function ProjectListPage() {
-  const [data, setData] = useState<any>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch('/api/projects');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const responseData = await response.json();
-        setData(responseData);
-        setLoading(false);
-      } catch (err: any) {
-        setError(err.message);
-        setLoading(false);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (error) {
-    return <div>Error: {error}</div>;
+const fetchProjects = async () => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/projects`,
+    {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    }
+  );
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
   }
+  const responseData = await response.json();
+  return responseData as Project[];
+};
+
+export default async function ProjectListPage() {
+  const data = await fetchProjects();
 
   return (
     <section>
       <div className='section-inner'>
-        <ProjectList projects={data} error={error} loading={loading} />
+        <ProjectList projects={data} />
       </div>
     </section>
   );
