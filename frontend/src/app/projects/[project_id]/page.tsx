@@ -1,6 +1,6 @@
 import { Project } from '@/lib/types';
 
-import ProjectItem from './project-page';
+import ProjectItem from '../../../components/project/project-page';
 const fetchProject = async (params: { project_id: string }) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/projects/${params.project_id}`,

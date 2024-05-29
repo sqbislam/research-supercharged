@@ -12,6 +12,7 @@ class ArticlesAssign(CreateBase):
     project_id: int
     
 class ArticleCreate(CreateBase):
+    uid: Optional[str] = None
     title: Optional[str] = None
     authors: Optional[list[str]] = None
     link: Optional[str] = None
@@ -35,6 +36,7 @@ class ArticleUpdate(UpdateBase):
 # curd model
 # out
 class Article(ResponseBase):
+    uid: Optional[str] = None
     title: Optional[str] = None
     authors: Optional[str] = None
     link: Optional[str] = None

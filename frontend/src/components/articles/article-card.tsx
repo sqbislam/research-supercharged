@@ -1,6 +1,7 @@
 'use client';
 import { ArrowBigLeftDash, FileText } from 'lucide-react';
 import moment from 'moment';
+import { createRef } from 'react';
 
 import { Article } from '@/lib/types';
 
@@ -8,6 +9,8 @@ import Modal from '@/components/Modal';
 import PDFViewer from '@/components/PdfViewer';
 
 import { useModal } from '@/providers/modal-provider';
+
+import ArticleMenu from './article-menu';
 export default function ArticleCard({
   article,
   addArticleToCommit,
@@ -15,20 +18,35 @@ export default function ArticleCard({
 }: {
   article: Article;
   addArticleToCommit?: (article: Article) => void;
+
   noAbstract?: boolean;
 }) {
   const publishedDateString =
     article.published_date && moment(article.published_date).toLocaleString();
   const { openModal } = useModal();
-
+  const articleMenuRef = createRef<HTMLButtonElement>();
   // If the user clicks on the article card, add the article to the commit articless
-  const handleArticleClick = (e: any) => {
+  const handleArticleClick = () => {
     if (addArticleToCommit) {
       addArticleToCommit(article);
     }
   };
+  const onArticleClickOpenMenu = () => {
+    if (articleMenuRef?.current) {
+      articleMenuRef.current?.click();
+    }
+  };
+
   return (
-    <div className='flex flex-col p-2 hover:bg-primary-foreground hover:cursor-pointer'>
+    <div
+      className='flex flex-col p-8 hover:bg-primary-foreground hover:cursor-pointer relative'
+      onClick={onArticleClickOpenMenu}
+    >
+      <ArticleMenu
+        menuRef={articleMenuRef}
+        handleArticleClick={handleArticleClick}
+        openPDFModal={openModal}
+      />
       <div className='flex flex-row justify-between items-center gap-1'>
         <div>
           <h4>
@@ -37,7 +55,10 @@ export default function ArticleCard({
               <>
                 <span
                   className='inline-flex ml-2 cursor-pointer hover:scale-110 transition-transform transform duration-150'
-                  onClick={openModal}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openModal();
+                  }}
                 >
                   <FileText color='red' size={16} />
                 </span>
@@ -48,7 +69,10 @@ export default function ArticleCard({
             )}
             <span
               className='inline-flex ml-2 cursor-pointer hover:scale-110 transition-transform transform duration-150'
-              onClick={handleArticleClick}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleArticleClick();
+              }}
             >
               <ArrowBigLeftDash color='green' size={16} />
             </span>

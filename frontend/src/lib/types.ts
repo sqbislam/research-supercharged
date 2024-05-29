@@ -29,6 +29,7 @@ export interface ArticleUpdate {
 // Properties to return to client (CURD model)
 
 export interface Article {
+  uid?: string;
   title?: string;
   authors?: string[];
   link?: string;
