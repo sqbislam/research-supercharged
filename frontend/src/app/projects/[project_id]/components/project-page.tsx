@@ -1,23 +1,30 @@
 'use client';
 
+import { SaveIcon } from 'lucide-react';
+
 import { getCategories } from '@/lib/constants/category_constants';
-import { Article, Project } from '@/lib/types';
+import useFetchData from '@/hooks/useFetchData';
 
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
+import ArticleCard from './article-card';
 import { useProjectData } from './project-data-context';
 import { ProjectTabs } from './project-tabs';
-import ArticleCard from '../articles/article-card';
-import { Button } from '../ui/button';
 
-export default function ProjectItem({ projects }: { projects: Project }) {
+export default function ProjectItem() {
   const { data, commitArticles, addArticleToCommit } = useProjectData();
+  const { isLoading, fetchData } = useFetchData({
+    url: '/articles/commit',
+    data: { articles: commitArticles, project_id: data.id },
+    method: 'POST',
+  });
 
   return (
     <section>
       <div className='section-inner'>
-        <div className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
+        <div className='grid grid-cols-1 sm:grid-cols-[1fr_2fr] gap-6'>
           <div>
             {data && (
               <Card className='shadow-sm rounded-sm p-6 mb-6'>
@@ -42,6 +49,14 @@ export default function ProjectItem({ projects }: { projects: Project }) {
                         : 0}
                     </span>
                   </h4>
+                  <Button
+                    size='icon'
+                    variant='ghost'
+                    onClick={fetchData}
+                    disabled={isLoading}
+                  >
+                    <SaveIcon size={24} />
+                  </Button>
                 </div>
                 <div className='divide-y'>
                   {commitArticles.length > 0 &&

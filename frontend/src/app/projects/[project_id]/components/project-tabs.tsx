@@ -2,8 +2,8 @@ import { Article } from '@/lib/types';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-import ArticlesList from '../articles/articles-list';
-import ArticleResearcher from '../articles/article-researcher';
+import ArticleResearcher from './article-researcher';
+import ArticlesList from './articles-list';
 
 export function ProjectTabs({
   addArticleToCommit,

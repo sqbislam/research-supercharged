@@ -4,14 +4,14 @@ import { toast } from 'react-toastify';
 
 import { Article } from '@/lib/types';
 
-import Loading from '../Loading';
-import { useProjectData } from '../project/project-data-context';
-import { Button } from '../ui/button';
-import { Card, CardContent } from '../ui/card';
+import { useProjectData } from './project-data-context';
+import Loading from '../../../../components/Loading';
+import { Button } from '../../../../components/ui/button';
+import { Card, CardContent } from '../../../../components/ui/card';
 
 const fetchSummaryofArticles = async (articles: Article[]) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/articles/`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/articles/extract`,
     {
       method: 'POST',
       headers: {
@@ -58,7 +58,13 @@ export default function ArticleResearcher() {
       ) : (
         <Card className='p-10'>
           <CardContent>
-            {data && <MarkdownPreview source={data} style={{ padding: 6 }} />}
+            {data && (
+              <MarkdownPreview
+                source={data}
+                style={{ padding: 6, backgroundColor: '#020202' }}
+                className='bg-primary'
+              />
+            )}
           </CardContent>
         </Card>
       )}

@@ -22,7 +22,11 @@ export const ProjectDataProvider: React.FC<{
   project: Project;
 }> = ({ children, project }) => {
   const [data, setData] = useState(project);
-  const [commitArticles, setCommitArticles] = useState<Article[]>([]);
+  const [commitArticles, setCommitArticles] = useState<Article[]>(
+    project.articles || []
+  );
+
+  console.debug({ project });
   // Function to add an article to the commit list
   const addArticleToCommit = (article: Article) => {
     // Only append articles which are not already present in the array based on uid

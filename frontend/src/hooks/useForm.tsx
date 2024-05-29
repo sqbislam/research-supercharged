@@ -64,6 +64,7 @@ export const useForm = <T extends FieldValues>({
           method: config.method,
           headers: config.headers,
           body: JSON.stringify(data),
+          next: { revalidate: 0 },
         });
         if (action) action(response);
       } catch (error) {

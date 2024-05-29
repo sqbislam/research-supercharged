@@ -25,6 +25,7 @@ async def fetch_articles(search_query: str, start: int = 0, max_results: int=10)
 @router.post("/assign/")
 async def create_articles(data: ArticlesAssign, session: SessionDep):
     res_articles = []
+    
     for a in data.articles:
         a['project_id'] = data.project_id        
         res_articles.append(a)

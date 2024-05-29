@@ -10,6 +10,7 @@ import Modal from '@/components/Modal';
 import PDFViewer from '@/components/PdfViewer';
 
 import ArticleMenu from './article-menu';
+
 export default function ArticleCard({
   article,
   addArticleToCommit,
