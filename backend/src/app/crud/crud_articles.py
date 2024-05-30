@@ -10,8 +10,9 @@ class CRUDArticles(CRUDBase[Article, ArticleCreate, ArticleUpdate]):
     async def create(self, db: AsyncClient, *, obj_in: list[ArticleCreate]) -> list[ArticleCreate]:
         model = type[Article]
         """create by CreateSchemaType"""
+        
         data, count = (
-            await db.table(Article.table_name).insert(obj_in).execute()
+            await db.table(Article.table_name).insert([ob.model_dump() for ob in obj_in]).execute()
         )
         _, created = data
         return created

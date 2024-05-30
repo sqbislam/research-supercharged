@@ -9,6 +9,7 @@
 from .crud_item import item
 from .crud_project import project
 from .crud_articles import article
+from .crud_summary import summary
 
 # For a new basic set of CRUD operations you could just do
 

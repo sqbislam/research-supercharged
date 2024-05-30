@@ -143,10 +143,10 @@
     @apply p-10 w-full md:max-w-[80%] mx-auto 
   }
   .card-hover-anim {
-    @apply transition-transform transform hover:scale-105 hover:shadow-xl duration-300 hover:bg-primary-foreground/20 cursor-pointer;
+    @apply transition-transform transform hover:shadow-xl duration-200 hover:bg-primary-foreground/20 cursor-pointer;
   }
   .card-hover-anim:focus-visible {
-    @apply transition-transform transform focus-visible:scale-105 focus-visible:shadow-xl duration-300 focus-visible:bg-primary-foreground/20 cursor-pointer;
+    @apply transition-transform transform focus-visible:shadow-xl duration-200 focus-visible:bg-primary-foreground/20 cursor-pointer;
   }
   
 }

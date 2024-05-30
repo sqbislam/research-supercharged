@@ -7,11 +7,11 @@ export interface ArticlesAssign {
 
 export interface ArticleCreate {
   title?: string;
-  authors?: string;
+  authors?: AuthorList;
   link?: string;
   abstract?: string;
   category?: string;
-  published_date?: Date;
+  published_date?: string;
   journal_ref?: string;
   doi?: string;
 }
@@ -28,14 +28,18 @@ export interface ArticleUpdate {
 
 // Properties to return to client (CURD model)
 
+export interface AuthorList {
+  author_list: string[];
+}
 export interface Article {
   uid?: string;
   title?: string;
-  authors?: string[];
+  authors?: AuthorList;
   link?: string;
   abstract?: string;
   category?: string;
   published_date?: string;
+  project_id?: number;
   journal_ref?: string;
   doi?: string;
 }

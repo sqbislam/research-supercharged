@@ -18,7 +18,6 @@ export default function ArticleCard({
 }: {
   article: Article;
   addArticleToCommit?: (article: Article) => void;
-
   noAbstract?: boolean;
 }) {
   const publishedDateString =
@@ -86,8 +85,9 @@ export default function ArticleCard({
           <span className='text-xs'>{`Publication date ${publishedDateString}`}</span>
           <div className='w-full flex flex-row gap-2'>
             {article.authors &&
-              article.authors.length > 0 &&
-              article.authors.map((author, index) => (
+              article.authors.author_list &&
+              article.authors.author_list.length > 0 &&
+              article.authors.author_list.map((author, index) => (
                 <p key={index} className='font-bold text-xs'>
                   {author}
                 </p>

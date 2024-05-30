@@ -2,6 +2,7 @@ from datetime import datetime
 from typing import Optional
 
 
+from app.schemas.articles import Article
 from app.schemas.base import CreateBase, InDBBase, ResponseBase, UpdateBase
 from datetime import datetime
 from typing import ClassVar
@@ -36,8 +37,9 @@ class Project(ResponseBase):
     description: Optional[str] = None
     keywords: Optional[str] = None
     is_deleted: Optional[bool] = None
-    articles: Optional[list] = None
+    articles: Optional[list[Article]] = None
     process_status: Optional[str] = None
+    summaries: Optional[list] = None
     table_name: ClassVar[str] = "projects"
 
 
@@ -48,5 +50,6 @@ class ProjectInDB(InDBBase):
     description: Optional[str] = None
     keywords: Optional[str] = None
     is_deleted: Optional[bool] = None
-    articles: Optional[list] = None
+    articles: Optional[list[Article]] = None
+    summaries: Optional[list] = None
     process_status: Optional[str] = None

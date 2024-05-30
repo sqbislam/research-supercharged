@@ -6,7 +6,7 @@
 @Description  :
 """
 
-from typing import ClassVar
+from typing import ClassVar, Optional
 
 from pydantic import BaseModel, ConfigDict
 from datetime import datetime
@@ -23,7 +23,9 @@ from datetime import datetime
 # in
 class CreateBase(BaseModel):
     # inherent to add more properties for creating
-    pass
+    Config: ClassVar[ConfigDict] = ConfigDict(
+        extra="ignore", arbitrary_types_allowed=True
+    )
 
 
 # Properties to receive on item update
@@ -40,8 +42,8 @@ class UpdateBase(BaseModel):
 
 # Properties shared by models stored in DB
 class InDBBase(BaseModel):
-    id: int
-    created_at: datetime
+    id: Optional[int]
+    created_at: Optional[datetime]
 
 # Properties to return to client
 # curd model

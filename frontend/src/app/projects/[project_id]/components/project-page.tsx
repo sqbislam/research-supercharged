@@ -3,6 +3,7 @@
 import { SaveIcon } from 'lucide-react';
 
 import { getCategories } from '@/lib/constants/category_constants';
+import { Article } from '@/lib/types';
 import useFetchData from '@/hooks/useFetchData';
 
 import { Badge } from '@/components/ui/badge';
@@ -18,6 +19,13 @@ export default function ProjectItem() {
   const { isLoading, fetchData } = useFetchData({
     url: '/articles/commit',
     data: { articles: commitArticles, project_id: data.id },
+    transformData: (data) => {
+      const res = data.articles.map((article: Article) => {
+        article.project_id = data.project_id;
+        return article;
+      });
+      return res;
+    },
     method: 'POST',
   });
 

@@ -8,6 +8,7 @@ export default function useFetchData({
   next,
   data,
   successAction,
+  transformData,
 }: {
   url: string;
   method?: string;
@@ -15,6 +16,7 @@ export default function useFetchData({
   next?: any;
   data?: any;
   successAction?: string;
+  transformData?: (data: any) => any;
 }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
@@ -22,6 +24,9 @@ export default function useFetchData({
   const fetchData = async () => {
     setIsLoading(true);
     try {
+      if (transformData) {
+        data = transformData(data);
+      }
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api${url}`,
         {

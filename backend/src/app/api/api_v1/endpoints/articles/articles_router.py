@@ -27,13 +27,8 @@ async def fetch_articles(search_query: str, start: int = 0, max_results: int=10)
     return parsed_data
 
 @router.post("/assign/")
-async def create_articles(data: ArticlesAssign, session: SessionDep):
-    res_articles = []
-    
-    for a in data.articles:
-        a['project_id'] = data.project_id        
-        res_articles.append(a)
-    res = await article.create(session, obj_in=res_articles)
+async def create_articles(data: list[ArticleCreate], session: SessionDep):
+    res = await article.create(session, obj_in=data)
     return res
 
 @router.post("/extract/", response_class=PlainTextResponse)
@@ -48,12 +43,13 @@ async def extract_articles(data: list[ArticleCreate]):
 async def project_start_task(data: ArticlesAssign, project_id:str):
     urls = [a['link'] for a in data.articles]
     article_ids = [a['uid'] for a in data.articles]
+    db = await database.db()
     try:
         # Run the task in the background asynchronously
         researcher = Researcher(urls)
         loop = asyncio.get_running_loop()
         result = await loop.run_in_executor(None, lambda: researcher.get_summary())
-        db = await database.db()
+        
         
         result_summary = None
         # Insert summary into the database
@@ -78,6 +74,8 @@ async def project_start_task(data: ArticlesAssign, project_id:str):
             )
         logging.error("Error in extracting summary")
         return False
+    finally:
+        db.auth.sign_out()
     
 
 

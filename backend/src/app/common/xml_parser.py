@@ -23,7 +23,7 @@ class XMLParser():
                 authors = await self.get_attribute('author', x, './/atom:author/atom:name', namespace)
                 published_date = await self.get_attribute('text', x, './/atom:published', namespace)
                     
-                res.append({'uid':unique_id, 'title': title, 'abstract': summary, 'doi': doi, 'link': link, 'authors': authors, 'category': category, 'journal_ref':journal_ref, 'published_date':published_date})
+                res.append({'uid':unique_id, 'title': title, 'abstract': summary, 'doi': doi, 'link': link, 'authors': {'author_list': authors}, 'category': category, 'journal_ref':journal_ref, 'published_date':published_date})
             except Exception as e:
                 logging.error("Error in parsing XML data")
         return res

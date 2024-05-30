@@ -13,7 +13,7 @@ class CRUDProject(CRUDBase[Project, ProjectCreate, ProjectUpdate]):
         return await super().get(db, id=id)
 
     async def get_all(self, db: AsyncClient) -> list[Project]:
-        return await super().get_all(db)
+        return await super().get_all_projects(db)
 
     async def get_multi_by_owner(self, db: AsyncClient, *, user: UserIn) -> list[Project]:
         return await super().get_multi_by_owner(db, user=user)
@@ -23,6 +23,15 @@ class CRUDProject(CRUDBase[Project, ProjectCreate, ProjectUpdate]):
 
     async def delete(self, db: AsyncClient, *, id: str) -> Project:
         return await super().delete(db, id=id)
+    
+    async def get_with_summary(self, db: AsyncClient, *, id: str) -> Project:
+        data, count = (
+            await db.table(Project.table_name).select(
+                '*, summaries(*)'
+            ).eq('id', id).execute()
+        )
+        _, got = data
+        return self.model(**got[0]) if got else None
     async def task_status(self, db: AsyncClient, *, id: str, task_status:str) -> Project:
         data, count = (
             await db.table(Project.table_name).update({'process_status': task_status}).eq('id', id).execute()

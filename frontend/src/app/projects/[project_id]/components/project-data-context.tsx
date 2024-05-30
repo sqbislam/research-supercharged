@@ -5,12 +5,16 @@ import React, { createContext, ReactNode, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { Article, Project } from '@/lib/types';
+import useSummaryPolling from '@/hooks/useSummaryPolling';
 
 interface ProjectDataContextProps {
   data: Project;
   commitArticles: Article[];
   addArticleToCommit: (article: Article) => void;
   deleteArticleFromCommit: (article: Article) => void;
+  handleProcessStart?: () => void;
+  summary?: string;
+  summaryLoading?: boolean;
 }
 
 const ProjectDataContext = createContext<ProjectDataContextProps | undefined>(
@@ -25,8 +29,10 @@ export const ProjectDataProvider: React.FC<{
   const [commitArticles, setCommitArticles] = useState<Article[]>(
     project.articles || []
   );
-
-  console.debug({ project });
+  const { loading, summary, handleProcessStart } = useSummaryPolling({
+    articles: commitArticles,
+    projectID: data.id,
+  });
   // Function to add an article to the commit list
   const addArticleToCommit = (article: Article) => {
     // Only append articles which are not already present in the array based on uid
@@ -47,6 +53,9 @@ export const ProjectDataProvider: React.FC<{
         commitArticles,
         addArticleToCommit,
         deleteArticleFromCommit,
+        handleProcessStart,
+        summary,
+        summaryLoading: loading,
       }}
     >
       {children}

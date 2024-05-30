@@ -13,7 +13,10 @@ import { ThemeToggle } from '../ui/theme-toggle';
 export default function Navbar() {
   return (
     <nav className='w-full top-0 p-4 flex justify-between items-center'>
-      <h3>Research Super</h3>
+      <Link href='/' className='card-hover-anim'>
+        <h3>Research Super</h3>
+      </Link>
+
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>

@@ -24,7 +24,14 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
     async def get_all(self, db: AsyncClient) -> list[ModelType]:
         """get all by table_name"""
-        data, count = await db.table(self.model.table_name).select("*, articles(*)").order('created_at', desc=True).execute()
+        data, count = await db.table(self.model.table_name).select("*").order('created_at', desc=True).execute()
+        _, got = data
+        
+        return [self.model(**item) for item in got]
+    
+    async def get_all_projects(self, db: AsyncClient) -> list[ModelType]:
+        """get all by table_name"""
+        data, count = await db.table(self.model.table_name).select("*, articles(*), summaries(*)").order('created_at', desc=True).execute()
         _, got = data
         
         return [self.model(**item) for item in got]
