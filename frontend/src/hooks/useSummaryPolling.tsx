@@ -5,6 +5,10 @@ import { Article } from '@/lib/types';
 
 // Dummy functions to simulate API calls
 async function startGenerateSummary(projectID: number, articles: Article[]) {
+  const body = articles.map((article) => {
+    article.project_id = projectID;
+    return article;
+  });
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/articles/extract`,
     {
@@ -12,7 +16,7 @@ async function startGenerateSummary(projectID: number, articles: Article[]) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ articles, project_id: projectID }),
+      body: JSON.stringify({ articles: body, project_id: projectID }),
     }
   );
   const data = await response.json();

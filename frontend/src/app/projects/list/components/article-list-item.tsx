@@ -7,7 +7,7 @@ export default function ArticleListItem({ article }: { article: Article }) {
   const publishedDateString =
     article.published_date && moment(article.published_date).toLocaleString();
   return (
-    <div className='p-4 rounded-lg shadow-md'>
+    <div className='p-4 rounded-none shadow-md'>
       <div className='flex flex-row justify-between items-center gap-1'>
         <div>
           <h6>{article.title}</h6>

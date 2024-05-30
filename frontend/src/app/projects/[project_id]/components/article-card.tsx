@@ -41,7 +41,7 @@ export default function ArticleCard({
 
   return (
     <div
-      className='flex flex-col p-8 hover:bg-primary-foreground hover:cursor-pointer relative'
+      className='flex flex-col p-4 hover:bg-primary-foreground hover:cursor-pointer relative'
       onClick={onArticleClickOpenMenu}
     >
       <ArticleMenu
@@ -51,7 +51,7 @@ export default function ArticleCard({
       />
       <div className='flex flex-row justify-between items-center gap-1'>
         <div>
-          <h4>
+          <h5>
             {article.title}
             {article.link && (
               <>
@@ -81,7 +81,7 @@ export default function ArticleCard({
             >
               <ArrowBigLeftDash color='green' size={16} />
             </span>
-          </h4>
+          </h5>
           <span className='text-xs'>{`Publication date ${publishedDateString}`}</span>
           <div className='w-full flex flex-row gap-2'>
             {article.authors &&

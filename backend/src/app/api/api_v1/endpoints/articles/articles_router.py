@@ -41,8 +41,9 @@ async def extract_articles(data: list[ArticleCreate]):
 
 # Background Task for Extracting Articles
 async def project_start_task(data: ArticlesAssign, project_id:str):
-    urls = [a['link'] for a in data.articles]
-    article_ids = [a['uid'] for a in data.articles]
+    article_dump = [a.model_dump() for a in data.articles]
+    urls = [a['link'] for a in article_dump]
+    article_ids = [a['uid'] for a in article_dump]
     db = await database.db()
     try:
         # Run the task in the background asynchronously

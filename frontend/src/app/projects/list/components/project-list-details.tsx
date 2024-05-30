@@ -12,7 +12,7 @@ export default function ProjectListDetails({ project }: { project?: Project }) {
       </div>
       <div className='py-5'>
         <h5>Articles</h5>
-        <div>
+        <div className='divide-y'>
           {project.articles &&
             project.articles.map((article) => (
               <ArticleListItem key={article.uid} article={article} />
