@@ -58,7 +58,7 @@ class AIGenerator:
             max_output_tokens = 2000
         )
     
-    async def generate_summary_with_vectorstore(self):
+    def generate_summary_with_vectorstore(self):
         """
         Generates a summary provided using a vectorstore
 
@@ -90,11 +90,11 @@ class AIGenerator:
         response = chain.invoke("Researcher")
         return response
 
-    async def generate_summary(self) -> list:
+    def generate_summary(self) -> list:
         """
         Generate a Summary
         """
-        self.responses = await self.generate_summary_with_vectorstore()
+        self.responses = self.generate_summary_with_vectorstore()
         print(self.responses)
         return self.clean_response(self.responses)
     

@@ -37,6 +37,7 @@ class Project(ResponseBase):
     keywords: Optional[str] = None
     is_deleted: Optional[bool] = None
     articles: Optional[list] = None
+    process_status: Optional[str] = None
     table_name: ClassVar[str] = "projects"
 
 
@@ -47,3 +48,5 @@ class ProjectInDB(InDBBase):
     description: Optional[str] = None
     keywords: Optional[str] = None
     is_deleted: Optional[bool] = None
+    articles: Optional[list] = None
+    process_status: Optional[str] = None

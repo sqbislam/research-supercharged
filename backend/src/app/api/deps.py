@@ -6,6 +6,7 @@
 @Description  :
 """
 
+from contextlib import contextmanager
 import logging
 from typing import Annotated
 
@@ -69,12 +70,11 @@ async def get_db() -> AsyncClient:
         await client.auth.sign_in_with_password({"email": settings.SUPERUSER_EMAIL, "password": settings.SUPERUSER_PASSWORD})
         # # checks all done in supabase-py !
         # # await client.auth.set_session(token.access_token, token.refresh_token)
-        session = await client.auth.get_session()
-        logging.info("Client created and authenticated", client, session)
+        # session = await client.auth.get_session()
         yield client
 
     except AuthApiError as e:
-        logging.error(e)
+       
         raise HTTPException(
             status_code=401, detail="Invalid authentication credentials"
         )

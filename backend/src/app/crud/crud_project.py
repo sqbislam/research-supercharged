@@ -23,6 +23,11 @@ class CRUDProject(CRUDBase[Project, ProjectCreate, ProjectUpdate]):
 
     async def delete(self, db: AsyncClient, *, id: str) -> Project:
         return await super().delete(db, id=id)
-
+    async def task_status(self, db: AsyncClient, *, id: str, task_status:str) -> Project:
+        data, count = (
+            await db.table(Project.table_name).update({'process_status': task_status}).eq('id', id).execute()
+        )
+        
+        return data
 
 project = CRUDProject(Project)

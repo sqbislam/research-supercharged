@@ -25,7 +25,7 @@ class XMLParser():
                     
                 res.append({'uid':unique_id, 'title': title, 'abstract': summary, 'doi': doi, 'link': link, 'authors': authors, 'category': category, 'journal_ref':journal_ref, 'published_date':published_date})
             except Exception as e:
-                logging.error("Error in parsing XML data", e)
+                logging.error("Error in parsing XML data")
         return res
         
     async def get_attribute(self, type:str, el:ET.Element, path_str: str, namespace:dict[str, str], field:str='text'):
@@ -45,7 +45,7 @@ class XMLParser():
                 return el.find(path_str, namespace).get(field)
            
         except Exception as e:
-            logging.error("Error in extracting attribute "+ path_str, e)
+            logging.error("Error in extracting attribute "+ path_str)
             return None
     
     async def get_link(self, el:ET.Element, path_str: str, namespace:dict[str, str]):
@@ -55,7 +55,7 @@ class XMLParser():
                 if l.attrib.get('title') and l.attrib['title'] == 'pdf':
                     return l.attrib.get('href')
         except Exception as e:
-            logging.error("Error in extracting link "+ path_str, e)
+            logging.error("Error in extracting link "+ path_str)
             return None
         
     
@@ -67,5 +67,5 @@ class XMLParser():
                 authors.append(author.text)
             return authors
         except Exception as e:
-            logging.error("Error in extracting author "+ path_str, e)
+            logging.error("Error in extracting author "+ path_str)
             return []

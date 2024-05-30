@@ -16,9 +16,9 @@ class Researcher:
         await self.processor.ingest_documents()
         return self.processor.pages
     
-    async def get_summary(self):
-        await self.processor.ingest_documents()
-        await self.chroma_creator.create_chroma_collection()
+    def get_summary(self):
+        self.processor.ingest_documents()
+        self.chroma_creator.create_chroma_collection()
         generator = AIGenerator(self.chroma_creator)
-        responses = await generator.generate_summary()
+        responses = generator.generate_summary()
         return responses

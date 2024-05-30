@@ -19,3 +19,12 @@ async def get_projects(session: SessionDep) -> list[Project]:
 @router.get("/{project_id}")
 async def get_project(project_id: int, session: SessionDep) -> Project:
     return await project.get(session, id=project_id)
+
+@router.get("/status/{project_id}")
+async def get_project_status(project_id: str, session: SessionDep):
+    response = await project.get(session, id=project_id)
+    if(response and response.process_status):
+        return response.process_status
+    else:
+        return "FAILED"
+ 

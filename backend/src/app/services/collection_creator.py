@@ -26,7 +26,7 @@ class ChromaCollectionCreator:
             raise ValueError("No DB initialized")
         
         return self.db.as_retriever()
-    async def create_chroma_collection(self):
+    def create_chroma_collection(self):
         """
         Task: Create a Chroma collection from the documents processed by the DocumentProcessor instance.
         
