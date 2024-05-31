@@ -18,7 +18,7 @@ async def get_projects(session: SessionDep) -> list[Project]:
 
 @router.get("/{project_id}")
 async def get_project(project_id: int, session: SessionDep) -> Project:
-    return await project.get(session, id=project_id)
+    return await project.get_with_summary(session, id=project_id)
 
 @router.get("/status/{project_id}")
 async def get_project_status(project_id: str, session: SessionDep):

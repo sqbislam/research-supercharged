@@ -68,7 +68,7 @@
       --secondary: 240 3.7% 15.9%;
       --secondary-foreground: 0 0% 98%;
 
-      --muted: 240 3.7% 15.9%;
+      --muted: 240 3.7% 35.9%;
       --muted-foreground: 240 5% 64.9%;
 
       --accent: 240 3.7% 15.9%;
@@ -146,7 +146,7 @@
     @apply transition-transform transform hover:shadow-xl duration-200 hover:bg-primary-foreground/20 cursor-pointer;
   }
   .card-hover-anim:focus-visible {
-    @apply transition-transform transform focus-visible:shadow-xl duration-200 focus-visible:bg-primary-foreground/20 cursor-pointer;
+    @apply transition-transform transform focus-visible:shadow-xl duration-100 focus-visible:bg-primary-foreground/20 cursor-pointer;
   }
   
 }

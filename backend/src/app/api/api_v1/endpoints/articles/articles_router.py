@@ -76,13 +76,12 @@ async def project_start_task(data: ArticlesAssign, project_id:str):
         logging.error("Error in extracting summary")
         return False
     finally:
-        db.auth.sign_out()
+        await db.auth.sign_out()
     
 
 
 @router.post("/extract/start")
 async def start_background_task(data: ArticlesAssign, session: SessionDep, background_tasks: BackgroundTasks):
-    db = get_db()
     background_tasks.add_task(project_start_task, data, data.project_id)
     response = await project.task_status(session, id=data.project_id, task_status="RUNNING")
     return response

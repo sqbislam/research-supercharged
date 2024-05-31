@@ -47,12 +47,14 @@ type ProjectStatus = 'RUNNING' | 'FAILED' | 'SUCCESS' | 'NOT_STARTED';
 export default function useSummaryPolling({
   articles,
   projectID,
+  defaultSummary
 }: {
   articles: Article[];
   projectID: number | undefined;
+  defaultSummary?: string | ''
 }) {
   const [status, setStatus] = useState<ProjectStatus>('NOT_STARTED');
-  const [summary, setSummary] = useState('');
+  const [summary, setSummary] = useState(defaultSummary);
   const [loading, setLoading] = useState(false);
   const [startProcess, setStartProcess] = useState(false);
 

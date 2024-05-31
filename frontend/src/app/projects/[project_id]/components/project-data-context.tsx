@@ -31,6 +31,7 @@ export const ProjectDataProvider: React.FC<{
   );
   const { loading, summary, handleProcessStart } = useSummaryPolling({
     articles: commitArticles,
+    defaultSummary: project.summaries?.[0]?.summary ?? '',
     projectID: data.id,
   });
   // Function to add an article to the commit list

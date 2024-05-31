@@ -27,7 +27,7 @@ class CRUDProject(CRUDBase[Project, ProjectCreate, ProjectUpdate]):
     async def get_with_summary(self, db: AsyncClient, *, id: str) -> Project:
         data, count = (
             await db.table(Project.table_name).select(
-                '*, summaries(*)'
+                '*, articles(*), summaries(*)'
             ).eq('id', id).execute()
         )
         _, got = data

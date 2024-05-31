@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 import ArticleCard from './article-card';
+import Loading from '../loading';
 
 export default function ArticlesList({
   addArticleToCommit,
@@ -48,7 +49,13 @@ export default function ArticlesList({
   return (
     <div>
       <div className='flex flex-row p-2 justify-between items-center'>
-        <h4>Articles List</h4>
+        <div>
+          <h4>Search Articles</h4>
+          <p className='text-xs text-muted'>
+            Search for articles and add them to your project
+          </p>
+        </div>
+
         <div className='flex-col md:header-two-col '>
           <Input
             defaultValue={searchQuery}
@@ -60,17 +67,23 @@ export default function ArticlesList({
           </Button>
         </div>
       </div>
-      <div className='divide-y max-h-[100vh] overflow-y-auto overflow-x-hidden'>
-        {data &&
-          data.length > 0 &&
-          data.map((article: Article, index) => (
-            <ArticleCard
-              key={article.uid || index}
-              article={article}
-              addArticleToCommit={addArticleToCommit}
-            />
-          ))}
-      </div>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className='divide-y max-h-[70vh] w-full overflow-y-auto overflow-x-hidden'>
+          {data && data.length > 0 ? (
+            data.map((article: Article, index) => (
+              <ArticleCard
+                key={article.uid || index}
+                article={article}
+                addArticleToCommit={addArticleToCommit}
+              />
+            ))
+          ) : (
+            <h4 className='mx-auto mt-[200px] w-max'>No results</h4>
+          )}
+        </div>
+      )}
     </div>
   );
 }

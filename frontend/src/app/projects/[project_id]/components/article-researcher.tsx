@@ -11,7 +11,13 @@ export default function ArticleResearcher() {
   return (
     <div>
       <div className='flex flex-row p-2 justify-between items-center'>
-        <h4>AI Researcher</h4>
+        <div>
+          <h4>Article Researcher</h4>
+          <p className='text-xs text-muted'>
+            Generate a summary of the article
+          </p>
+        </div>
+
         <div>
           <Button variant='outline' onClick={handleProcessStart}>
             Generate Summary
@@ -21,14 +27,16 @@ export default function ArticleResearcher() {
       {summaryLoading ? (
         <Loading />
       ) : (
-        <Card className='p-10'>
+        <Card className='p-10 rounded-none border-none overflow-y-auto max-h-[70vh]'>
           <CardContent>
-            {summary && (
+            {summary ? (
               <MarkdownPreview
                 source={summary ?? ''}
-                style={{ padding: 6, backgroundColor: '#020202' }}
-                className='bg-primary'
+                style={{ padding: 6 }}
+                className='!bg-background'
               />
+            ) : (
+              <h5>Click Generate Summary to generate summary</h5>
             )}
           </CardContent>
         </Card>

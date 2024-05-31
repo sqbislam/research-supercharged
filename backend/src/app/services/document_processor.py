@@ -2,7 +2,7 @@
 
 # Necessary imports
 import logging
-from langchain_community.document_loaders import PDFMinerLoader
+from langchain_community.document_loaders import PyMuPDFLoader
 import uuid
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -31,11 +31,11 @@ class DocumentProcessor:
               
                 # Step 2: Process the temporary file
                 try:
-                    loader = PDFMinerLoader(url)
+                    loader = PyMuPDFLoader(url)
                     extracted_pages = loader.load_and_split(RecursiveCharacterTextSplitter(chunk_size=2000))
                     logging.info(f"Loaded {len(extracted_pages)} pages from {url}")
                 except Exception as e:
-                    print(f"Error loading {url}")
+                    print(f"Error loading {e}")
                     continue
                 
                 # Step 3: Then, Add the extracted pages to the 'pages' list.

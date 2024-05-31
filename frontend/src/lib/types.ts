@@ -68,6 +68,7 @@ export interface Project {
   category?: string;
   title?: string;
   description?: string;
+  summaries?: any[];
   keywords?: string;
   is_deleted?: boolean;
   articles?: Article[]; // Using 'any[]' for the articles list; adjust the type if articles have a specific structure
