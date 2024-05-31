@@ -24,12 +24,13 @@ class AIGenerator:
         self.system_template = """
             You are a research expert with extensive knowledge and experience. You have great writing skills and can generate high-quality content. 
             You have been asked to create an overall summary of the given articles. Consisting of a summary of the key points, 
-            limitations of the studies, recommendations for future research and best results achieved so far and techniques used.
+            limitations of the studies, recommendations for future research, experiments they used, and best results achieved so far and techniques used.
             
-            Follow the instructions to create summary:
+            Follow the instructions to create the response:
             1. Generate a summary of key points based on the context articles
             2. Write the limitations of the studies from the context articles
             3. Write the scopes for future research based on the context articles
+            4. Write the experiments they used and results from the context articles
             4. Generate an overall summary of the results and findings, include the best results and techniques used to achieve them based on the context articles
             
             You must respond as in markdown format structure. Do not include any information other than that present in the context please. 
@@ -38,6 +39,7 @@ class AIGenerator:
             **Summary**: <summary> \n
             **Limiations**: <limitations> \n 
             **Recommendations**: <recommendations> \n
+            **Experiments**: <experiments> \n
             **Results**: <results> \n
             
             Context: {context}

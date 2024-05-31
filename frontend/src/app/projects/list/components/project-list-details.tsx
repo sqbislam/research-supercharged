@@ -20,7 +20,12 @@ export default function ProjectListDetails({ project }: { project?: Project }) {
         </div>
       </div>
       <div className='py-5'>
-        <h5>Summaries</h5>
+        <h5 className='mb-5'>Summaries</h5>
+        {project.summaries && project.summaries.length > 0 ? (
+          <h4>{`Summaries Generated : ${project.summaries.length}`}</h4>
+        ) : (
+          <h4>No summaries generated</h4>
+        )}
       </div>
     </div>
   );

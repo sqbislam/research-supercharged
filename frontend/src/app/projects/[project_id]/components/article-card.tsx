@@ -51,7 +51,7 @@ export default function ArticleCard({
       />
       <div className='flex flex-row justify-between items-center gap-1'>
         <div>
-          <h5>
+          <h6>
             {article.title}
             {article.link && (
               <>
@@ -72,17 +72,19 @@ export default function ArticleCard({
                 </Modal>
               </>
             )}
-            <span
-              className='inline-flex ml-2 cursor-pointer hover:scale-110 transition-transform transform duration-150'
-              onClick={(e) => {
-                e.stopPropagation();
-                handleArticleClick();
-              }}
-            >
-              <ArrowBigLeftDash color='green' size={16} />
-            </span>
-          </h5>
-          <span className='text-xs'>{`Publication date ${publishedDateString}`}</span>
+            {!noAbstract && (
+              <span
+                className='inline-flex ml-2 cursor-pointer hover:scale-110 transition-transform transform duration-150'
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleArticleClick();
+                }}
+              >
+                <ArrowBigLeftDash color='green' size={16} />
+              </span>
+            )}
+          </h6>
+
           <div className='w-full flex flex-row gap-2'>
             {article.authors &&
               article.authors.author_list &&
@@ -93,6 +95,7 @@ export default function ArticleCard({
                 </p>
               ))}
           </div>
+          <span className='text-xs text-muted'>{`Publication date ${publishedDateString}`}</span>
         </div>
       </div>
       {!noAbstract && <p className='text-xs mt-2'>{article.abstract}</p>}

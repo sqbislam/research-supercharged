@@ -15,6 +15,8 @@ interface ProjectDataContextProps {
   handleProcessStart?: () => void;
   summary?: string;
   summaryLoading?: boolean;
+  fetchedArticles?: Article[];
+  setFetchArticles?: (articles: Article[]) => void;
 }
 
 const ProjectDataContext = createContext<ProjectDataContextProps | undefined>(
@@ -26,6 +28,7 @@ export const ProjectDataProvider: React.FC<{
   project: Project;
 }> = ({ children, project }) => {
   const [data, setData] = useState(project);
+  const [fetchedArticles, setFetchArticles] = useState<Article[]>([]);
   const [commitArticles, setCommitArticles] = useState<Article[]>(
     project.articles || []
   );
@@ -57,6 +60,8 @@ export const ProjectDataProvider: React.FC<{
         handleProcessStart,
         summary,
         summaryLoading: loading,
+        fetchedArticles,
+        setFetchArticles,
       }}
     >
       {children}

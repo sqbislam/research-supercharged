@@ -21,7 +21,7 @@ export default function ArticleMenu({
           onClick={(e) => {
             e.stopPropagation();
           }}
-          variant='outline'
+          variant='ghost'
           size='icon'
           className='absolute top-0 right-0 p-2'
         >

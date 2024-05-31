@@ -7,12 +7,14 @@ import { Input } from '@/components/ui/input';
 
 import ArticleCard from './article-card';
 import Loading from '../loading';
+import { useProjectData } from './project-data-context';
 
 export default function ArticlesList({
   addArticleToCommit,
 }: {
   addArticleToCommit: (article: Article) => void;
 }) {
+  const { fetchedArticles, setFetchArticles } = useProjectData();
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState('Computer Vision');
   const [error, setError] = useState();
@@ -37,7 +39,7 @@ export default function ArticlesList({
         throw new Error('Network response was not ok');
       }
       const responseData = await response.json();
-      setData(responseData);
+      if (setFetchArticles) setFetchArticles(responseData as Article[]);
       setLoading(false);
     } catch (err: any) {
       setError(err.message);
@@ -71,8 +73,8 @@ export default function ArticlesList({
         <Loading />
       ) : (
         <div className='divide-y max-h-[70vh] w-full overflow-y-auto overflow-x-hidden'>
-          {data && data.length > 0 ? (
-            data.map((article: Article, index) => (
+          {fetchedArticles && fetchedArticles.length > 0 ? (
+            fetchedArticles.map((article: Article, index) => (
               <ArticleCard
                 key={article.uid || index}
                 article={article}
