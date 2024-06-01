@@ -1,6 +1,8 @@
+import logging
 import sys
 import os
 import chromadb
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 sys.path.append(os.path.abspath('../../'))
 
@@ -9,7 +11,7 @@ sys.path.append(os.path.abspath('../../'))
 # Import Task libraries
 from langchain_core.documents import Document
 from langchain.text_splitter import CharacterTextSplitter
-from langchain_community.vectorstores import Chroma
+from langchain_community.vectorstores.chroma import Chroma
 
 class ChromaCollectionCreator:
     def __init__(self, processor, embed_model):
@@ -54,9 +56,9 @@ class ChromaCollectionCreator:
         # Step 3: Create the Chroma Collection
    
         # Add persistent client to use stored db
-        client = chromadb.Client()
-        self.db = Chroma.from_documents(texts, self.embed_model, client=client)
-
+        client = chromadb.PersistentClient()
+        self.db = Chroma.from_documents(texts, self.embed_model, client=client, collection_name="chroma_collection")
+        
     
     def query_chroma_collection(self, query) -> Document:
         """
@@ -73,4 +75,50 @@ class ChromaCollectionCreator:
                 return None
         else:
             return None
+        
+    async def create_chroma_collection_chat(self):
+        """
+        Task: Create a Chroma collection from the documents processed by the DocumentProcessor instance.
+        
+        Steps:
+        1. Check if any documents have been processed by the DocumentProcessor instance. If not, display an error message using streamlit's error widget.
+        2. Split the processed documents into text chunks suitable for embedding and indexing. Use the CharacterTextSplitter from Langchain to achieve
+        3. Create a Chroma collection in memory with the text chunks obtained from step 2 and the embeddings model initialized in the class.
+   
+        """
+        
+        # Step 1: Check for processed documents
+        if len(self.processor.pages) == 0:
+            return
+
+        # Step 2: Split documents into text chunks
+        text_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=1000,
+            chunk_overlap=0,
+            length_function=len,
+        )
+        texts=text_splitter.split_documents(self.processor.pages)
+
+    
+        # Add persistent client to use stored db
+        client = chromadb.Client()
+        db = Chroma.from_documents(texts, self.embed_model, client=client)
+        return db
+    
+    async def query_chroma_collection_chat(self, query) -> Document:
+        """
+        Queries the created Chroma collection for documents similar to the query.
+        :param query: The query string to search for in the Chroma collection.
+        
+        Returns the first matching document from the collection with similarity score.
+        """
+        if self.db:
+            docs = self.db.similarity_search_with_relevance_scores(query)
+            if docs:
+                return docs[0]
+            else:
+                return None
+        else:
+            return None
+
 

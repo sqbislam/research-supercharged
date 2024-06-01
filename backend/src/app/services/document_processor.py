@@ -41,5 +41,30 @@ class DocumentProcessor:
                 # Step 3: Then, Add the extracted pages to the 'pages' list.
                 self.pages.extend(extracted_pages)
           
+    async def ingest_documents_for_chat(self):
+        """
+        Get the online PDFs and 
+        extracts their pages, and updates the self.pages list with the total number of pages.
+        
+        """
+        # Read the PDF files from URLs      
+        if self.urls is not None:
+            for url in self.urls:
+                logging.info("Processing document from URL... ")
+                
+                # Step 2: Process the temporary file
+                try:
+                    loader = PyMuPDFLoader(url)
+                    extracted_pages = loader.load_and_split(RecursiveCharacterTextSplitter(chunk_size=2000))
+                    logging.info(f"Loaded {len(extracted_pages)} pages from {url}")
+                    
+                except Exception as e:
+                    print(f"Error loading {e}")
+                    return False
+                
+                # Step 3: Then, Add the extracted pages to the 'pages' list.
+                self.pages.extend(extracted_pages)
+            
+        return self.pages
 
 
