@@ -61,6 +61,14 @@ export interface ProjectUpdate {
   is_deleted?: boolean;
 }
 
+export interface Summary {
+  id?: number;
+  summary?: string;
+  project_id: number;
+  article_ids?: string[];
+  created_at?: string;
+}
+
 // Properties to return to client
 // CURD model
 export interface Project {
@@ -68,7 +76,7 @@ export interface Project {
   category?: string;
   title?: string;
   description?: string;
-  summaries?: any[];
+  summaries?: Summary[];
   keywords?: string;
   is_deleted?: boolean;
   articles?: Article[]; // Using 'any[]' for the articles list; adjust the type if articles have a specific structure

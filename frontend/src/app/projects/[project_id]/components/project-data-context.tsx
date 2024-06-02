@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import { toast } from 'react-toastify';
 
-import { Article, Project } from '@/lib/types';
+import { Article, Project, Summary } from '@/lib/types';
 import useSummaryPolling from '@/hooks/useSummaryPolling';
 
 interface ProjectDataContextProps {
@@ -24,6 +24,7 @@ interface ProjectDataContextProps {
   fetchedArticles?: Article[];
   setFetchArticles?: (articles: Article[]) => void;
   urls?: string[];
+  summaryList?: Summary[];
 }
 
 const ProjectDataContext = createContext<ProjectDataContextProps | undefined>(
@@ -39,6 +40,9 @@ export const ProjectDataProvider: React.FC<{
   const [commitArticles, setCommitArticles] = useState<Article[]>(
     project.articles || []
   );
+  const [summaryList, setSummaryList] = useState<Summary[]>(
+    project.summaries ?? []
+  );
   const [urls, setUrls] = useState<string[]>([]);
 
   useEffect(() => {
@@ -51,11 +55,13 @@ export const ProjectDataProvider: React.FC<{
     }
   }, [commitArticles]);
 
+  // Fetch the summary for the project using Polling endpoint
   const { loading, summary, handleProcessStart } = useSummaryPolling({
     articles: commitArticles,
     defaultSummary: project.summaries?.[0]?.summary ?? '',
     projectID: data.id,
   });
+
   // Function to add an article to the commit list
   const addArticleToCommit = (article: Article) => {
     // Only append articles which are not already present in the array based on uid
@@ -66,6 +72,7 @@ export const ProjectDataProvider: React.FC<{
       setCommitArticles([...commitArticles, article]);
     }
   };
+  // Function to delete an article from the commit list
   const deleteArticleFromCommit = (article: Article) => {
     setCommitArticles(commitArticles.filter((a) => a.uid !== article.uid));
   };
@@ -82,6 +89,7 @@ export const ProjectDataProvider: React.FC<{
         fetchedArticles,
         setFetchArticles,
         urls,
+        summaryList,
       }}
     >
       {children}

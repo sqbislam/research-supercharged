@@ -1,6 +1,5 @@
 export const siteConfig = {
-  title: 'Research Supercharged',
-  description: 'Supercharge your research using cutting edge LLMs',
-  /** Without additional '/' on the end, e.g. https://theodorusclarence.com */
+  title: 'IntelliResearch',
+  description: 'Don’t just manage your research—excel with IntelliResearch!',
   url: 'https://saqib-islam.com',
 };

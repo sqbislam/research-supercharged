@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   // ! copy to /favicon folder
   icons: {
-    icon: '/favicon/favicon.ico',
+    icon: '/favicon.png',
     shortcut: '/favicon/favicon-16x16.png',
     apple: '/favicon/apple-touch-icon.png',
   },

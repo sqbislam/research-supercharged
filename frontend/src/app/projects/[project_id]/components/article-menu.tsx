@@ -8,10 +8,12 @@ export default function ArticleMenu({
   menuRef,
   handleArticleClick,
   openPDFModal,
+  deleteArticle,
 }: {
   menuRef: any;
   handleArticleClick: () => void;
   openPDFModal: () => void;
+  deleteArticle?: () => void;
 }) {
   return (
     <Popover>
@@ -36,7 +38,11 @@ export default function ArticleMenu({
           <Button variant='menu' onClick={openPDFModal}>
             View PDF
           </Button>
-          <Button variant='menu'>Delete</Button>
+          {deleteArticle && (
+            <Button onClick={deleteArticle} variant='menu'>
+              Delete
+            </Button>
+          )}
         </div>
       </PopoverContent>
     </Popover>

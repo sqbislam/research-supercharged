@@ -28,6 +28,11 @@ async def fetch_articles(search_query: str, start: int = 0, max_results: int=10)
 
 @router.post("/assign/")
 async def create_articles(data: list[ArticleCreate], session: SessionDep):
+    # Check if articles already assigned to the project
+    
+    # Also check if articles deleted in the new data and remove them from the db
+    
+    
     res = await article.create(session, obj_in=data)
     return res
 
@@ -64,13 +69,13 @@ async def project_start_task(data: ArticlesAssign, project_id:str):
         logging.info(f"Result Summary: {result_summary}")
         # Update the status of project to SUCCESS
         if(db and result_summary):
-            data, count = (
+            data, _ = (
                 await db.table(Project.table_name).update({'process_status': "SUCCESS"}).eq('id', project_id).execute()
             )
     except:
         # Update the status of project to FAILED
         if(db):
-            data, count = (
+            data, _ = (
                 await db.table(Project.table_name).update({'process_status': "FAILED"}).eq('id', project_id).execute()
             )
         logging.error("Error in extracting summary")

@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { Article } from '@/lib/types';
 
@@ -6,8 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 import ArticleCard from './article-card';
-import Loading from '../loading';
 import { useProjectData } from './project-data-context';
+import Loading from '../loading';
 
 export default function ArticlesList({
   addArticleToCommit,
@@ -15,11 +16,16 @@ export default function ArticlesList({
   addArticleToCommit: (article: Article) => void;
 }) {
   const { fetchedArticles, setFetchArticles } = useProjectData();
-  const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState('Computer Vision');
-  const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
+  const [maxResult, setMaxResult] = useState(10);
 
+  // Fetch more articles
+  const handleFetchMore = () => {
+    setMaxResult((prev) => prev + 10);
+    handleFetchArticles();
+  };
+  // Fetch articles from arxiv api
   const handleFetchArticles = useCallback(async () => {
     try {
       setLoading(true);
@@ -28,7 +34,7 @@ export default function ArticlesList({
           new URLSearchParams({
             search_query: searchQuery,
             start: '0',
-            maxResult: '10',
+            maxResult: maxResult.toString(),
           }),
         {
           method: 'GET',
@@ -42,12 +48,12 @@ export default function ArticlesList({
       if (setFetchArticles) setFetchArticles(responseData as Article[]);
       setLoading(false);
     } catch (err: any) {
-      setError(err.message);
+      toast.error(err.message);
       setLoading(false);
     } finally {
       setLoading(false);
     }
-  }, [searchQuery]);
+  }, [searchQuery, maxResult]);
   return (
     <div>
       <div className='flex flex-row p-2 justify-between items-center'>
@@ -64,7 +70,7 @@ export default function ArticlesList({
             placeholder='Search'
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <Button onClick={handleFetchArticles} disabled={loading}>
+          <Button onClick={handleFetchMore} disabled={loading}>
             Fetch Articles
           </Button>
         </div>
@@ -74,13 +80,23 @@ export default function ArticlesList({
       ) : (
         <div className='divide-y max-h-[70vh] w-full overflow-y-auto overflow-x-hidden'>
           {fetchedArticles && fetchedArticles.length > 0 ? (
-            fetchedArticles.map((article: Article, index) => (
-              <ArticleCard
-                key={article.uid || index}
-                article={article}
-                addArticleToCommit={addArticleToCommit}
-              />
-            ))
+            <>
+              {fetchedArticles.map((article: Article, index) => (
+                <ArticleCard
+                  key={article.uid || index}
+                  article={article}
+                  addArticleToCommit={addArticleToCommit}
+                />
+              ))}
+              <Button
+                onClick={handleFetchArticles}
+                disabled={loading}
+                size='sm'
+                variant='ghost'
+              >
+                Fetch More
+              </Button>
+            </>
           ) : (
             <h4 className='mx-auto mt-[200px] w-max'>No results</h4>
           )}

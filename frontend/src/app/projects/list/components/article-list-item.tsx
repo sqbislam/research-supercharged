@@ -7,13 +7,13 @@ export default function ArticleListItem({ article }: { article: Article }) {
   const publishedDateString =
     article.published_date && moment(article.published_date).toLocaleString();
   return (
-    <div className='p-4 rounded-none shadow-md'>
+    <div className='p-4 rounded-none shadow-md min-h-[140px]'>
       <div className='flex flex-row justify-between items-center gap-1'>
         <div>
+          <span className='text-xs'>{`Publication date ${publishedDateString}`}</span>
           <h6>{article.title}</h6>
 
-          <span className='text-xs'>{`Publication date ${publishedDateString}`}</span>
-          <div className='w-full flex flex-row gap-2'>
+          <div className='w-full flex flex-row gap-2 mt-2'>
             {article.authors &&
               article.authors.author_list &&
               article.authors.author_list.length > 0 &&

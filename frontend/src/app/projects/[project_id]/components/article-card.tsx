@@ -15,13 +15,16 @@ export default function ArticleCard({
   article,
   addArticleToCommit,
   noAbstract = false,
+  deleteArticle,
 }: {
   article: Article;
   addArticleToCommit?: (article: Article) => void;
   noAbstract?: boolean;
+  deleteArticle?: (article: Article) => void;
+  alreadyComitted?: boolean;
 }) {
   const publishedDateString =
-    article.published_date && moment(article.published_date).toLocaleString();
+    article.published_date && moment(article.published_date).format('LL');
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const articleMenuRef = createRef<HTMLButtonElement>();
   // If the user clicks on the article card, add the article to the commit articless
@@ -35,17 +38,23 @@ export default function ArticleCard({
       articleMenuRef.current?.click();
     }
   };
+  const onArticleDelete = () => {
+    if (deleteArticle) {
+      deleteArticle(article);
+    }
+  };
   const openModal = () => {
     setModalIsOpen(true);
   };
 
   return (
     <div
-      className='flex flex-col p-4 hover:bg-primary-foreground hover:cursor-pointer relative'
+      className='flex flex-col p-4 hover:bg-primary-foreground hover:cursor-pointer relative min-h-[160px]'
       onClick={onArticleClickOpenMenu}
     >
       <ArticleMenu
         menuRef={articleMenuRef}
+        deleteArticle={deleteArticle && onArticleDelete}
         handleArticleClick={handleArticleClick}
         openPDFModal={openModal}
       />

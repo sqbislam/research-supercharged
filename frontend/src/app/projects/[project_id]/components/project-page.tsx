@@ -15,10 +15,12 @@ import { useProjectData } from './project-data-context';
 import { ProjectTabs } from './project-tabs';
 
 export default function ProjectItem() {
-  const { data, commitArticles, addArticleToCommit } = useProjectData();
+  const { data, commitArticles, addArticleToCommit, deleteArticleFromCommit } =
+    useProjectData();
   const { isLoading, fetchData } = useFetchData({
     url: '/articles/commit',
     data: { articles: commitArticles, project_id: data.id },
+    successAction: 'Articles saved to project!',
     transformData: (data) => {
       const res = data.articles.map((article: Article) => {
         article.project_id = data.project_id;
@@ -71,6 +73,7 @@ export default function ProjectItem() {
                     commitArticles.map((article, index) => (
                       <ArticleCard
                         key={index}
+                        deleteArticle={deleteArticleFromCommit}
                         article={article}
                         noAbstract={true}
                       />
