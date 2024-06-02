@@ -1,13 +1,14 @@
-const Loading = () => (
-  <div className='relative h-full w-full min-h-[400px]'>
-    <div className='animate-spin spinner absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+import LoadingSpinner from './loading-spinner';
+import useArticleProcessingStatus from '../hooks/useArticleProcessingStatus';
+const Loading = () => {
+  const status = useArticleProcessingStatus();
+  return (
+    <div className='relative h-full w-full min-h-[400px]'>
+      <LoadingSpinner />
+      <p className='mt-10 absolute left-1/2 transform -translate-x-1/2'>
+        {`${status}...`}
+      </p>
     </div>
-  </div>
-);
+  );
+};
 export default Loading;

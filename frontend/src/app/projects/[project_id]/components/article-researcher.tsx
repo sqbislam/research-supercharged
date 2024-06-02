@@ -1,12 +1,12 @@
 import MarkdownPreview from '@uiw/react-markdown-preview';
 import { ArrowLeftSquare, ArrowRightSquare } from 'lucide-react';
+import { use, useEffect, useState } from 'react';
 
 import Loading from '@/components/Loading';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
 import { useProjectData } from './project-data-context';
-import { use, useEffect, useState } from 'react';
 
 export default function ArticleResearcher() {
   const {

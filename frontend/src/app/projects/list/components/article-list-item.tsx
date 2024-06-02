@@ -1,13 +1,13 @@
-import { FileText } from 'lucide-react';
-import moment from 'moment';
-
 import { Article } from '@/lib/types';
+import { getDate } from '@/lib/utils';
+
+import CitationView from '../../citation-view';
 
 export default function ArticleListItem({ article }: { article: Article }) {
   const publishedDateString =
-    article.published_date && moment(article.published_date).toLocaleString();
+    article.published_date && getDate(article.published_date);
   return (
-    <div className='p-4 rounded-none shadow-md min-h-[140px]'>
+    <div className='p-4 rounded-none shadow-md min-h-[140px] relative'>
       <div className='flex flex-row justify-between items-center gap-1'>
         <div>
           <span className='text-xs'>{`Publication date ${publishedDateString}`}</span>
@@ -23,6 +23,7 @@ export default function ArticleListItem({ article }: { article: Article }) {
                 </p>
               ))}
           </div>
+
           {/* {article.link && (
             <>
               <span className='inline-flex ml-2 cursor-pointer hover:scale-110 transition-transform transform duration-150'>

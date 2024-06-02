@@ -10,6 +10,8 @@ import Modal from '@/components/Modal';
 import PDFViewer from '@/components/PdfViewer';
 
 import ArticleMenu from './article-menu';
+import { getDate } from '@/lib/utils';
+import CitationView from '../../citation-view';
 
 export default function ArticleCard({
   article,
@@ -24,7 +26,7 @@ export default function ArticleCard({
   alreadyComitted?: boolean;
 }) {
   const publishedDateString =
-    article.published_date && moment(article.published_date).format('LL');
+    article.published_date && getDate(article.published_date);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const articleMenuRef = createRef<HTMLButtonElement>();
   // If the user clicks on the article card, add the article to the commit articless
@@ -52,6 +54,10 @@ export default function ArticleCard({
       className='flex flex-col p-4 hover:bg-primary-foreground hover:cursor-pointer relative min-h-[160px]'
       onClick={onArticleClickOpenMenu}
     >
+      <CitationView
+        article={article}
+        className='absolute bottom-[10px] right-[10px]'
+      />
       <ArticleMenu
         menuRef={articleMenuRef}
         deleteArticle={deleteArticle && onArticleDelete}
