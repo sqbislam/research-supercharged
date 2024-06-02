@@ -1,7 +1,13 @@
 // Component to store the project data and provider
 
 'use client';
-import React, { createContext, ReactNode, useContext, useState } from 'react';
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { toast } from 'react-toastify';
 
 import { Article, Project } from '@/lib/types';
@@ -17,6 +23,7 @@ interface ProjectDataContextProps {
   summaryLoading?: boolean;
   fetchedArticles?: Article[];
   setFetchArticles?: (articles: Article[]) => void;
+  urls?: string[];
 }
 
 const ProjectDataContext = createContext<ProjectDataContextProps | undefined>(
@@ -32,6 +39,18 @@ export const ProjectDataProvider: React.FC<{
   const [commitArticles, setCommitArticles] = useState<Article[]>(
     project.articles || []
   );
+  const [urls, setUrls] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (commitArticles.length > 0) {
+      // Get all the urls from the articles
+      const urls = commitArticles.map((article) => {
+        if (article.link) return article.link;
+      });
+      setUrls(urls as any);
+    }
+  }, [commitArticles]);
+
   const { loading, summary, handleProcessStart } = useSummaryPolling({
     articles: commitArticles,
     defaultSummary: project.summaries?.[0]?.summary ?? '',
@@ -62,6 +81,7 @@ export const ProjectDataProvider: React.FC<{
         summaryLoading: loading,
         fetchedArticles,
         setFetchArticles,
+        urls,
       }}
     >
       {children}

@@ -24,17 +24,27 @@ async def lrt():
 @router.websocket("/ws")
 async def chat_with_article(websocket: WebSocket):
     await websocket.accept()
-    researcher = Researcher(["http://arxiv.org/pdf/1905.07844v1"])
+    researcher = None
     qa_chain = None
+    
     while True:
+        
         try:
             # Receive and log the client message
             user_msg = await websocket.receive_text()
             logging.info(f"Received message: {user_msg}")
-
-            # Construct and send start response
-            start_resp = ChatResponse(sender="bot", content="", type="start")
-            await websocket.send_json(start_resp.model_dump())
+            if "ping" in user_msg:
+                url_list = user_msg.replace("ping:", "").split(",")
+                researcher = Researcher(url_list)
+                # Construct and send start response
+                url_resp = ChatResponse(sender="bot", content="Hi, I am processing your documents and will be ready to answer your questions", type="start")
+                await websocket.send_json(url_resp.model_dump())
+                continue
+   
+            if researcher is None:
+                error_resp = ChatResponse(sender="bot", content="Sorry, please refresh the page. Something went wrong", type="start")
+                await websocket.send_json(error_resp.model_dump())
+                
             if qa_chain is None:
                 qa_chain = await researcher.get_qa_chain()
            

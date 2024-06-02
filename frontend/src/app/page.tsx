@@ -18,7 +18,7 @@ export default function HomePage() {
   return (
     <main>
       <Head>
-        <title>Research Supercharged</title>
+        <title>IntelliResearch</title>
       </Head>
       <Hero />
     </main>

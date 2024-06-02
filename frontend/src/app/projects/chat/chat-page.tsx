@@ -1,14 +1,15 @@
 'use client';
 import { useEffect, useState } from 'react';
 
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+
+import { useProjectData } from '../[project_id]/components/project-data-context';
+
 export default function ChatPage() {
-  const [clientId, setClienId] = useState(
-    Math.floor(new Date().getTime() / 1000)
-  );
+  const { urls } = useProjectData();
 
   const [chatHistory, setChatHistory] = useState([]);
-  const [isOnline, setIsOnline] = useState(false);
-  const [textValue, setTextValue] = useState('');
   const [websckt, setWebsckt] = useState<WebSocket>();
 
   const [message, setMessage] = useState<any>([]);
@@ -18,22 +19,23 @@ export default function ChatPage() {
     messages,
     websckt,
     chatHistory,
-    isOnline,
-    textValue,
   });
   useEffect(() => {
     const url = 'ws://127.0.0.1:8000/api/v1/chat/ws';
     const ws = new WebSocket(url);
 
-    ws.onopen = (event) => {
+    ws.onopen = () => {
       if (ws.readyState === 1) {
-        ws.send('Tell me the authors of the article');
+        ws.send('ping:' + urls?.toString());
       }
     };
 
     // recieve message every start page
     ws.onmessage = (e) => {
       const message = JSON.parse(e.data);
+      if (message.type === 'start') {
+        ws.send('Are you ready to answer questions about the articles?');
+      }
       setMessages((messagesArr: any) => [...messagesArr, message]);
     };
 
@@ -51,52 +53,46 @@ export default function ChatPage() {
     }
     // recieve message every send message
     websckt.onmessage = (e) => {
-      console.debug('message', e.data);
       const message = JSON.parse(e.data);
       setMessages((messagesArr: any) => [...messagesArr, message]);
     };
-    websckt.onerror = (e) => {
-      console.debug({ error: e });
-    };
+
     setMessage([]);
   };
 
   return (
-    <div>
-      <div className='flex flex-row p-2 justify-between items-center'>
-        <div>
-          <h4>Chat</h4>
-          <p className='text-xs text-muted'>
-            Chat with your articles to get valuable insights
-          </p>
-          <div className='chat'>
-            {messages.map((value: any, index: number) => {
-              if (value.content) {
-                return (
-                  <div
-                    key={index}
-                    className='my-message-container bg-background p-5 rounded-lg'
-                  >
-                    <div className='my-message'>
-                      <p className='message'>{value.content}</p>
-                    </div>
-                  </div>
-                );
-              }
-            })}
-          </div>
-          <div className='input-chat-container'>
-            <input
-              className='input-chat'
-              type='text'
-              placeholder='Chat message ...'
-              onChange={(e) => setMessage(e.target.value)}
-              value={message}
-            ></input>
-            <button className='submit-chat' onClick={sendMessage}>
-              Send
-            </button>
-          </div>
+    <div className='flex flex-col p-2 w-full'>
+      <h4>Chat</h4>
+      <p className='text-xs text-muted'>
+        Chat with your articles to get valuable insights
+      </p>
+      <div className='chat h-[600px] overflow-y-scroll w-full p-3'>
+        {messages.map((value: any, index: number) => {
+          if (value.content) {
+            return (
+              <div
+                key={index}
+                className='my-message-container bg-primary-foreground p-5 rounded-lg mb-5'
+              >
+                <div>
+                  <p>{value.content}</p>
+                </div>
+              </div>
+            );
+          }
+        })}
+      </div>
+      <div className='input-chat-container'>
+        <div className='flex flex-row gap-2'>
+          <Input
+            type='text'
+            placeholder='Ask questions here ...'
+            onChange={(e) => setMessage(e.target.value)}
+            value={message}
+          />
+          <Button type='submit' onClick={sendMessage}>
+            Send
+          </Button>
         </div>
       </div>
     </div>

@@ -14,13 +14,13 @@ export default function Navbar() {
   return (
     <nav className='w-full top-0 p-4 flex justify-between items-center'>
       <Link href='/' className='card-hover-anim'>
-        <h3>Research Super</h3>
+        <h3>IntelliResearch</h3>
       </Link>
 
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <Link href='/projects' legacyBehavior passHref>
+            <Link href='/projects/list' legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Projects
               </NavigationMenuLink>

@@ -28,7 +28,7 @@ export function ProjectTabs({
       <TabsContent value='articles'>
         <ArticlesList addArticleToCommit={addArticleToCommit} />
       </TabsContent>
-      <TabsContent value='chat'>
+      <TabsContent value='chat' className='w-full'>
         <ChatPage />
       </TabsContent>
     </Tabs>
