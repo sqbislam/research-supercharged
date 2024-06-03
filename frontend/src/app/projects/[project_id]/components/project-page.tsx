@@ -54,9 +54,7 @@ export default function ProjectItem() {
                   <h4>
                     Articles added{': '}
                     <span className='text-sm'>
-                      {data.articles
-                        ? data.articles.length + commitArticles.length
-                        : 0}
+                      {data.articles ? data.articles.length : 0}
                     </span>
                   </h4>
                   <Button

@@ -46,7 +46,7 @@ export default function Hero() {
           </Link>
         </div>
         <div className='grid grid-rows-3 md:grid-cols-3 md:grid-rows-1 gap-5 min-h-[100px] w-full mt-10 mb-[100px]'>
-          <Card className='border-b-2 border-primary flex flex-col gap-2 h-full p-5'>
+          <Card className='flex flex-col gap-2 h-full p-5'>
             <School size={80} />
             <h5 className='text-xl font-bold my-5 '>Smart Article Search</h5>
             <p className='text-muted'>
@@ -54,7 +54,7 @@ export default function Hero() {
               with IntelliResearch's advanced AI search functionality
             </p>
           </Card>
-          <Card className='border-b-2 border-primary flex flex-col h-full p-5'>
+          <Card className='flex flex-col h-full p-5'>
             <Blocks size={80} />
             <h5 className='text-xl font-bold  my-5'> Project Management</h5>
             <p className='text-muted'>
@@ -64,7 +64,7 @@ export default function Hero() {
               citations in one place.
             </p>
           </Card>
-          <Card className='border-b-2 border-primary flex flex-col h-full p-5'>
+          <Card className='flex flex-col h-full p-5'>
             <Lightbulb size={80} />
             <h5 className='text-xl font-bold  my-5'>
               Summarization and Insights

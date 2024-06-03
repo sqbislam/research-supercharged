@@ -3,12 +3,12 @@ import { toast } from 'react-toastify';
 
 import { Article } from '@/lib/types';
 
+import Loading from '@/components/Loading';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 import ArticleCard from './article-card';
 import { useProjectData } from './project-data-context';
-import Loading from '@/components/Loading';
 
 export default function ArticlesList({
   addArticleToCommit,
@@ -16,7 +16,7 @@ export default function ArticlesList({
   addArticleToCommit: (article: Article) => void;
 }) {
   const { fetchedArticles, setFetchArticles } = useProjectData();
-  const [searchQuery, setSearchQuery] = useState('Computer Vision');
+  const [searchQuery, setSearchQuery] = useState('disease detection');
   const [loading, setLoading] = useState(false);
   const [maxResult, setMaxResult] = useState(10);
 

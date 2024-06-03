@@ -1,11 +1,10 @@
 import asyncio
 import logging
+import re
 from app.schemas.chat import ChatResponse
 from app.services.researcher import Researcher
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from langchain_core.messages import HumanMessage, AIMessage
-
-
 from websockets import ConnectionClosedOK
 
 

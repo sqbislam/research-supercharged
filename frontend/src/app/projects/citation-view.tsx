@@ -1,15 +1,15 @@
 import { Clipboard, Quote } from 'lucide-react';
-import { LegacyRef, RefObject, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { Article } from '@/lib/types';
 import { cn } from '@/lib/utils';
+import useCopyToClipboard from '@/hooks/useCopytoClipboard';
 
 import Modal from '@/components/Modal';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
 import CitationGenerator, { CitationFormat } from './citation-generator';
-import useCopyToClipboard from '@/hooks/useCopytoClipboard';
 const citationFormats: CitationFormat[] = ['APA', 'MLA', 'Chicago', 'IEEE'];
 export default function CitationView({
   article,
@@ -27,7 +27,8 @@ export default function CitationView({
     if (
       textRefs.current &&
       textRefs.current[index] &&
-      textRefs.current[index]?.innerText
+      textRefs.current[index]?.innerText &&
+      !isCopied
     ) {
       copyToClipboard(textRefs.current[index]?.innerText);
     }

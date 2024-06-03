@@ -117,7 +117,7 @@ class AIGenerator:
         Clean the response from the model
         """
         ## Add a new line before every ##
-        response = re.sub(r'##', '\n##', response).replace("* ", "- ")
+        response = re.sub(r'##', '\n##', response).replace("* ", "- ").replace("**",  "*")
         
         return response
     

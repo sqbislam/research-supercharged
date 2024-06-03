@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 
 import Suggestions from './suggestions';
 import { useProjectData } from '../[project_id]/components/project-data-context';
+import { Loader } from 'lucide-react';
 
 export default function ChatPage() {
   const { websocketProps } = useProjectData();
@@ -15,6 +16,7 @@ export default function ChatPage() {
     sendMessage,
     startChatHandler,
     startChat,
+    processing,
   } = websocketProps;
 
   return (
@@ -23,10 +25,7 @@ export default function ChatPage() {
       <p className='text-xs text-muted'>
         Chat with your articles to get valuable insights
       </p>
-      <div className='chat h-[500px] overflow-y-scroll w-full p-3 flex flex-col mt-2'>
-        {!startChat && (
-          <Button onClick={() => startChatHandler(true)}>Start Chat</Button>
-        )}
+      <div className='chat h-[400px] overflow-y-scroll w-full p-3 flex flex-col mt-10 align-middle'>
         {messages.map((value: any, index: number) => {
           if (value.content) {
             return (
@@ -45,17 +44,33 @@ export default function ChatPage() {
             );
           }
         })}
+        {processing && (
+          <p className='text-xs'>
+            <Loader className='animate-spin inline-flex' size={16} />{' '}
+            {' Processing'}
+          </p>
+        )}
       </div>
-      <div className='input-chat-container'>
+      <div className='flex flex-col items-center'>
+        {!startChat && (
+          <Button onClick={() => startChatHandler(true)} className='mb-10'>
+            Start Chat
+          </Button>
+        )}
         <Suggestions setMessage={setMessage} />
-        <div className='flex flex-row gap-2'>
+        <div className='flex flex-row gap-2 w-full'>
           <Input
             type='text'
             placeholder='Ask questions here ...'
             onChange={(e) => setMessage(e.target.value)}
             value={message}
           />
-          <Button type='submit' onClick={sendMessage}>
+          <Button
+            type='submit'
+            className='min-w-[100px]'
+            onClick={sendMessage}
+            disabled={processing}
+          >
             Send
           </Button>
         </div>

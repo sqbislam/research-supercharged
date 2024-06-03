@@ -56,6 +56,8 @@ export const ProjectDataProvider: React.FC<{
     defaultSummary: project.summaries?.[0]?.summary ?? '',
     projectID: data.id,
   });
+  // Websocket for the chat
+  const websocketProps = useWebSocketChat(urls);
 
   useEffect(() => {
     if (commitArticles.length > 0) {
@@ -66,9 +68,6 @@ export const ProjectDataProvider: React.FC<{
       setUrls(urls as any);
     }
   }, [commitArticles]);
-
-  // Websocket for the chat
-  const websocketProps = useWebSocketChat(urls);
 
   // Function to add an article to the commit list
   const addArticleToCommit = (article: Article) => {

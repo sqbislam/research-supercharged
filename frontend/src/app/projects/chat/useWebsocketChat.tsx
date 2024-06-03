@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 interface Message {
   type?: string;
@@ -14,6 +14,7 @@ export interface UseWebSocketChatProps {
   sendMessage: () => void;
   startChat?: boolean;
   startChatHandler: (start: boolean) => void;
+  processing: boolean;
 }
 
 const useWebSocketChat = (urls: string[]): UseWebSocketChatProps => {
@@ -22,6 +23,7 @@ const useWebSocketChat = (urls: string[]): UseWebSocketChatProps => {
   const [message, setMessage] = useState<string>('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [startChat, setStartChat] = useState<boolean>(false);
+  const [processing, setProcessing] = useState<boolean>(false);
   useEffect(() => {
     if (!urls) return;
     if (!startChat) return;
@@ -31,6 +33,7 @@ const useWebSocketChat = (urls: string[]): UseWebSocketChatProps => {
     ws.onopen = () => {
       if (ws.readyState === WebSocket.OPEN) {
         ws.send('ping:' + urls?.toString());
+        setProcessing(true);
       }
     };
 
@@ -38,6 +41,9 @@ const useWebSocketChat = (urls: string[]): UseWebSocketChatProps => {
       const message: Message = JSON.parse(e.data);
       if (message.type === 'start') {
         ws.send('Are you ready to answer questions about the articles?');
+      }
+      if ('type' in message && message.type == 'ai') {
+        setProcessing(false);
       }
       setMessages((messagesArr) => [...messagesArr, message]);
     };
@@ -51,7 +57,7 @@ const useWebSocketChat = (urls: string[]): UseWebSocketChatProps => {
     setChatHistory(messages);
   }, [messages]);
 
-  const sendMessage = () => {
+  const sendMessage = useCallback(() => {
     if (!websckt) {
       return;
     }
@@ -67,11 +73,21 @@ const useWebSocketChat = (urls: string[]): UseWebSocketChatProps => {
 
     websckt.onmessage = (e) => {
       const message: Message = JSON.parse(e.data);
+
+      if ('type' in message && message.type == 'ai') {
+        setProcessing(false);
+      }
       setMessages((messagesArr) => [...messagesArr, message]);
+    };
+    websckt.onerror = (e) => {
+      setProcessing(false);
+    };
+    websckt.onclose = (e) => {
+      setProcessing(false);
     };
 
     setMessage('');
-  };
+  }, [message, websckt, startChat]);
 
   const startChatHandler = (start: boolean) => {
     if (start) {
@@ -90,6 +106,7 @@ const useWebSocketChat = (urls: string[]): UseWebSocketChatProps => {
     sendMessage,
     startChat,
     startChatHandler,
+    processing,
   };
 };
 
