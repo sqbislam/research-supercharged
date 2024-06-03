@@ -58,7 +58,7 @@ export function ComboboxDemo(props: {
               ? categories_cs.find(
                   (framework) => framework.value.toLowerCase() === value
                 )?.label
-              : 'Select framework...'}
+              : 'Select category...'}
             <CaretSortIcon className='ml-2 h-4 w-4 shrink-0 opacity-50' />
           </Button>
         </PopoverTrigger>

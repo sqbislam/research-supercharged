@@ -54,10 +54,8 @@ class ChromaCollectionCreator:
         texts=text_splitter.split_documents(self.processor.pages)
 
         # Step 3: Create the Chroma Collection
-   
-        # Add persistent client to use stored db
-        client = chromadb.PersistentClient()
-        self.db = Chroma.from_documents(texts, self.embed_model, client=client, collection_name="chroma_collection")
+        client = chromadb.Client()
+        self.db = Chroma.from_documents(texts, self.embed_model, client=client)
         
     
     def query_chroma_collection(self, query) -> Document:

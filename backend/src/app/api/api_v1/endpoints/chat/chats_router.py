@@ -69,9 +69,5 @@ async def chat_with_article(websocket: WebSocket):
             break
         except Exception as e:
             logging.error(f"An error occurred: {e}")
-            resp = ChatResponse(
-                sender="bot",
-                message="Sorry, something went wrong. Try again.",
-                type="error",
-            )
-            await websocket.send_json(resp.model_dump())
+            error_resp = ChatResponse(sender="bot", content="Sorry, please refresh the page. Something went wrong", type="start")
+            await websocket.send_json(error_resp.model_dump())

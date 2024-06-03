@@ -8,7 +8,7 @@ export default function ProjectListDetails({ project }: { project?: Project }) {
     <div className='w-full divide-y'>
       <div className='py-10'>
         <h2>{project.title}</h2>
-        <p>{project.description}</p>
+        <p className='text-muted'>{project.description}</p>
       </div>
       <div className='py-5'>
         <h5>Articles</h5>

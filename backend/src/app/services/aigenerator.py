@@ -32,20 +32,22 @@ class AIGenerator:
         self.question_bank = [] # Initialize the question bank to store questions
         self.system_template = """
             You are a research expert with extensive knowledge and experience. You have great writing skills and can generate high-quality content. You elaborate as much as possible.
-            You have been asked to create an detailed description of the given articles. Elaborate on the details. Consisting of a summary of the key points, 
-            limitations of the studies, recommendations for future research, experiments they used, and best results achieved so far and techniques used. Elaborate on the details.
+            You have been asked to create an detailed description of the given articles. Elaborate on the details. Consisting of a summary of the key points,  literature review, prior work, the current state of the art, previous research,
+            limitations of the studies, recommendations for future research, experiments they used, evaluation metrics they used and best results achieved so far and techniques used. (Elaborate on the details as much as possible).
             
             Follow the instructions to create the response:
             1. Generate a summary of key points based on the context articles
-            2. Write the limitations of the studies from the context articles
-            3. Write the scopes for future research based on the context articles
-            4. Write the experiments they used and results from the context articles
-            4. Generate an overall summary of the results and findings, include the best results and techniques used to achieve them based on the context articles
+            2. Previous work and literature review based on the context articles
+            3. Write the limitations of the studies from the context articles
+            4. Write the scopes for future research based on the context articles
+            5. Write the experiments they used and results from the context articles
+            6. Generate an overall summary of the results and findings, include the best results and techniques used to achieve them based on the context articles
             
-            You must respond as in markdown format structure. Do not include any information other than that present in the context please. 
+            You must respond in markdown format structure. Do not include any information other than that present in the context please. 
             Elaborate your response in the given keys.
             
             **Summary**: <summary> \n
+            **Literature Review**: <literature_review> \n
             **Limiations**: <limitations> \n 
             **Recommendations**: <recommendations> \n
             **Experiments**: <experiments> \n
@@ -124,12 +126,14 @@ class AIGenerator:
     ## Chat Stream Generation
     def format_docs(self, docs):
         return "\n\n".join(doc.page_content for doc in docs)
+    
+    ## Chat Stream Generation using chain
     async def get_conversation_retriever_chain(self, prompt=''):
         # Enable a Retriever
         llm =VertexAI(
             model_name = "gemini-pro",
-            temperature = 0.8, # Increased for less deterministic questions 
-            max_output_tokens = 2000,
+            temperature = 0.7, # Increased for less deterministic questions 
+            max_output_tokens = 3000,
         
         )
         retriever = self.chroma_db.as_retriever(k=4)
@@ -167,7 +171,7 @@ class AIGenerator:
         llm = VertexAI(
                     model_name = "gemini-pro",
                     temperature = 0.8, # Increased for less deterministic questions 
-                    max_output_tokens =1000,
+                    max_output_tokens =2000,
                     streaming=True
                 )
 

@@ -22,6 +22,7 @@ export default function ProjectList(data: { projects: Project[] }) {
           projects.map((project) => (
             <ProjectCard
               key={project.id}
+              isSelected={selectedProject?.id === project.id}
               project={project}
               setSelectedProjectHandler={setSelectedProjectHandler}
             />

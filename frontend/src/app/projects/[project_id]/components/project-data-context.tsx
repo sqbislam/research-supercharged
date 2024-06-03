@@ -13,6 +13,10 @@ import { toast } from 'react-toastify';
 import { Article, Project, Summary } from '@/lib/types';
 import useSummaryPolling from '@/hooks/useSummaryPolling';
 
+import useWebSocketChat, {
+  UseWebSocketChatProps,
+} from '../../chat/useWebsocketChat';
+
 interface ProjectDataContextProps {
   data: Project;
   commitArticles: Article[];
@@ -25,6 +29,7 @@ interface ProjectDataContextProps {
   setFetchArticles?: (articles: Article[]) => void;
   urls?: string[];
   summaryList?: Summary[];
+  websocketProps?: UseWebSocketChatProps;
 }
 
 const ProjectDataContext = createContext<ProjectDataContextProps | undefined>(
@@ -45,6 +50,13 @@ export const ProjectDataProvider: React.FC<{
   );
   const [urls, setUrls] = useState<string[]>([]);
 
+  // Fetch the summary for the project using Polling endpoint
+  const { loading, summary, handleProcessStart } = useSummaryPolling({
+    articles: commitArticles,
+    defaultSummary: project.summaries?.[0]?.summary ?? '',
+    projectID: data.id,
+  });
+
   useEffect(() => {
     if (commitArticles.length > 0) {
       // Get all the urls from the articles
@@ -55,12 +67,8 @@ export const ProjectDataProvider: React.FC<{
     }
   }, [commitArticles]);
 
-  // Fetch the summary for the project using Polling endpoint
-  const { loading, summary, handleProcessStart } = useSummaryPolling({
-    articles: commitArticles,
-    defaultSummary: project.summaries?.[0]?.summary ?? '',
-    projectID: data.id,
-  });
+  // Websocket for the chat
+  const websocketProps = useWebSocketChat(urls);
 
   // Function to add an article to the commit list
   const addArticleToCommit = (article: Article) => {
@@ -90,6 +98,7 @@ export const ProjectDataProvider: React.FC<{
         setFetchArticles,
         urls,
         summaryList,
+        websocketProps,
       }}
     >
       {children}

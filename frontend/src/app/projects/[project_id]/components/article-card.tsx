@@ -100,7 +100,7 @@ export default function ArticleCard({
             )}
           </h6>
 
-          <div className='w-full flex flex-row gap-2'>
+          <div className='w-full flex flex-row gap-2 flex-wrap mt-2'>
             {article.authors &&
               article.authors.author_list &&
               article.authors.author_list.length > 0 &&

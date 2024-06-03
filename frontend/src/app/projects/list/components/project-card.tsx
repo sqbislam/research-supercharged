@@ -8,15 +8,18 @@ import { Project } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { ChevronsRight } from 'lucide-react';
 
 interface ProjectCardProps {
   project: Project;
   setSelectedProjectHandler?: (project: Project) => void;
+  isSelected?: boolean;
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
   project,
   setSelectedProjectHandler,
+  isSelected = false,
 }) => {
   const router = useRouter();
 
@@ -29,7 +32,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   };
   return (
     <Card
-      className='shadow-sm rounded-none p-4 mb-2 card-hover-anim'
+      className='shadow-sm rounded-none p-4 mb-2 card-hover-anim relative'
       onClick={onCardClick}
     >
       <div className='header-two-col'>
@@ -43,12 +46,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         </Button>
       </div>
 
-      <p className='mb-5 text-sm text-secondary-foreground'>
+      <p className='mb-5 text-sm text-muted'>
         {project.description || 'No description available.'}
       </p>
       <Badge variant='secondary' size='small'>
         {(project.category && getCategories(project.category)) || 'No Category'}
       </Badge>
+
+      {isSelected && (
+        <span className='absolute right-[-20px] transform top-1/2 -translate-y-1/2'>
+          <ChevronsRight size={20} />
+        </span>
+      )}
     </Card>
   );
 };

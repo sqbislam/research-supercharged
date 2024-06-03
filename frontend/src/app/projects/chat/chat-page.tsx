@@ -1,69 +1,23 @@
 'use client';
-import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-import { useProjectData } from '../[project_id]/components/project-data-context';
 import Suggestions from './suggestions';
+import { useProjectData } from '../[project_id]/components/project-data-context';
 
 export default function ChatPage() {
-  const { urls } = useProjectData();
-
-  const [chatHistory, setChatHistory] = useState([]);
-  const [websckt, setWebsckt] = useState<WebSocket>();
-
-  const [message, setMessage] = useState<any>([]);
-  const [messages, setMessages] = useState<any>([]);
-  console.debug({
-    message,
-    messages,
-    websckt,
+  const { urls, websocketProps } = useProjectData();
+  const {
     chatHistory,
-  });
-  useEffect(() => {
-    const url = 'ws://127.0.0.1:8000/api/v1/chat/ws';
-    const ws = new WebSocket(url);
-
-    ws.onopen = () => {
-      if (ws.readyState === 1) {
-        ws.send('ping:' + urls?.toString());
-      }
-    };
-
-    // recieve message every start page
-    ws.onmessage = (e) => {
-      const message = JSON.parse(e.data);
-      if (message.type === 'start') {
-        ws.send('Are you ready to answer questions about the articles?');
-      }
-      setMessages((messagesArr: any) => [...messagesArr, message]);
-    };
-
-    setWebsckt(ws);
-    // clean up function when we close page
-    return () => ws.close();
-  }, []);
-
-  const sendMessage = () => {
-    if (!websckt) {
-      return;
-    } // TODO: Add error feedback
-    if (websckt.readyState === 1) {
-      websckt.send(message);
-      setMessages((messagesArr: any) => [
-        ...messagesArr,
-        { content: message, type: 'user' },
-      ]);
-    }
-    // recieve message every send message
-    websckt.onmessage = (e) => {
-      const message = JSON.parse(e.data);
-      setMessages((messagesArr: any) => [...messagesArr, message]);
-    };
-
-    setMessage([]);
-  };
+    websckt,
+    message,
+    setMessage,
+    messages,
+    sendMessage,
+    startChatHandler,
+    startChat,
+  } = websocketProps;
 
   return (
     <div className='flex flex-col p-2 w-full'>
@@ -71,7 +25,10 @@ export default function ChatPage() {
       <p className='text-xs text-muted'>
         Chat with your articles to get valuable insights
       </p>
-      <div className='chat h-[600px] overflow-y-scroll w-full p-3 flex flex-col mt-2'>
+      <div className='chat h-[500px] overflow-y-scroll w-full p-3 flex flex-col mt-2'>
+        {!startChat && (
+          <Button onClick={() => startChatHandler(true)}>Start Chat</Button>
+        )}
         {messages.map((value: any, index: number) => {
           if (value.content) {
             return (

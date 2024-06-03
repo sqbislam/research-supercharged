@@ -37,10 +37,11 @@ async def create_articles(data: list[ArticleCreate], session: SessionDep):
     return res
 
 @router.post("/extract/", response_class=PlainTextResponse)
-async def extract_articles(data: list[ArticleCreate]):
-    urls = [a.link for a in data]
+async def extract_articles(data: ArticlesAssign):
+    article_dump = [a.model_dump() for a in data.articles]
+    urls = [a['link'] for a in article_dump]
     researcher = Researcher(urls)
-    response = await researcher.get_summary()
+    response = researcher.get_summary()
     return response
 
 
