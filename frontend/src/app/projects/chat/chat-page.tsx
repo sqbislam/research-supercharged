@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 import { useProjectData } from '../[project_id]/components/project-data-context';
+import Suggestions from './suggestions';
 
 export default function ChatPage() {
   const { urls } = useProjectData();
@@ -50,6 +51,10 @@ export default function ChatPage() {
     } // TODO: Add error feedback
     if (websckt.readyState === 1) {
       websckt.send(message);
+      setMessages((messagesArr: any) => [
+        ...messagesArr,
+        { content: message, type: 'user' },
+      ]);
     }
     // recieve message every send message
     websckt.onmessage = (e) => {
@@ -66,13 +71,17 @@ export default function ChatPage() {
       <p className='text-xs text-muted'>
         Chat with your articles to get valuable insights
       </p>
-      <div className='chat h-[600px] overflow-y-scroll w-full p-3'>
+      <div className='chat h-[600px] overflow-y-scroll w-full p-3 flex flex-col mt-2'>
         {messages.map((value: any, index: number) => {
           if (value.content) {
             return (
               <div
                 key={index}
-                className='my-message-container bg-primary-foreground p-5 rounded-lg mb-5'
+                className={`bg-primary-foreground p-5 rounded-lg mb-5 max-w-md ${
+                  value.type == 'user'
+                    ? 'self-start bg-teal-400 dark:bg-teal-600'
+                    : 'self-end'
+                }`}
               >
                 <div>
                   <p>{value.content}</p>
@@ -83,6 +92,7 @@ export default function ChatPage() {
         })}
       </div>
       <div className='input-chat-container'>
+        <Suggestions setMessage={setMessage} />
         <div className='flex flex-row gap-2'>
           <Input
             type='text'

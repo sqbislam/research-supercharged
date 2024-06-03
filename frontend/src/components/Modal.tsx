@@ -20,7 +20,7 @@ const Modal = ({
 
   return isOpen ? (
     <div
-      className='fixed inset-0 bg-black bg-opacity-10 flex items-center justify-center z-50'
+      className='fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50'
       onClick={handleBackgroundClick}
     >
       <button
@@ -29,9 +29,7 @@ const Modal = ({
       >
         &times;
       </button>
-      <div className='bg-white rounded-lg shadow-lg p-6 relative'>
-        {children}
-      </div>
+      <div className='rounded-lg shadow-lg p-6 relative'>{children}</div>
     </div>
   ) : null;
 };

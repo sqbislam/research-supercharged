@@ -69,7 +69,7 @@ export default function ArticleResearcher() {
         </div>
       </div>
       {summaryLoading ? (
-        <Loading />
+        <Loading showProcessing />
       ) : (
         <Card className='p-10 rounded-none border-none overflow-y-auto max-h-[70vh]'>
           <CardContent>

@@ -35,7 +35,7 @@ export default async function ProjectListPage() {
             <Button variant='outline'>
               Create Project{' '}
               <span>
-                <PlusCircleIcon size={20} className='ml-3' color='white' />
+                <PlusCircleIcon size={20} className='ml-3 text-primary' />
               </span>
             </Button>
           </Link>

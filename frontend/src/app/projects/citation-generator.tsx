@@ -22,7 +22,7 @@ export default function CitationGenerator({ article }: { article: Article }) {
       case 'IEEE':
         return authors
           .map((author) => {
-            const [lastName, firstName] = author.split(', ');
+            const [lastName, firstName] = author.split(' ');
             return `${firstName} ${lastName}`;
           })
           .join(', ');

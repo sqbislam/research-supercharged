@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 
 import ArticleCard from './article-card';
 import { useProjectData } from './project-data-context';
-import Loading from '../loading';
+import Loading from '@/components/Loading';
 
 export default function ArticlesList({
   addArticleToCommit,
