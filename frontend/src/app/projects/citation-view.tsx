@@ -1,18 +1,16 @@
+import { Clipboard, Quote } from 'lucide-react';
+import { LegacyRef, RefObject, useRef, useState } from 'react';
+
 import { Article } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
-import { Button } from '@/components/ui/button';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-
-import CitationGenerator from './citation-generator';
-import { useState } from 'react';
 import Modal from '@/components/Modal';
+import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Quote } from 'lucide-react';
+
+import CitationGenerator, { CitationFormat } from './citation-generator';
+import useCopyToClipboard from '@/hooks/useCopytoClipboard';
+const citationFormats: CitationFormat[] = ['APA', 'MLA', 'Chicago', 'IEEE'];
 export default function CitationView({
   article,
   className,
@@ -22,6 +20,19 @@ export default function CitationView({
 }) {
   const citation = CitationGenerator({ article });
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isCopied, copyToClipboard] = useCopyToClipboard();
+  const textRefs = useRef<(HTMLParagraphElement | null)[]>([]);
+
+  const handleCopyClick = (index: any) => {
+    if (
+      textRefs.current &&
+      textRefs.current[index] &&
+      textRefs.current[index]?.innerText
+    ) {
+      copyToClipboard(textRefs.current[index]?.innerText);
+    }
+  };
+
   const openModal = () => {
     setModalIsOpen(true);
   };
@@ -45,22 +56,25 @@ export default function CitationView({
       <Modal isOpen={modalIsOpen} closeModal={closeModal}>
         <Card className='flex flex-col w-full p-5 gap-4 max-w-[500px]'>
           <h2 className='text-xl font-semibold'>Citation</h2>
-          <div className='grid grid-cols-[1fr_2fr]'>
-            <p>APA </p>
-            <p className='grid gap-4 text-sm'>{citation('APA')}</p>
-          </div>
-          <div className='grid grid-cols-[1fr_2fr]'>
-            <p>MLA </p>
-            <p className='grid gap-4 text-sm'>{citation('MLA')}</p>
-          </div>
-          <div className='grid grid-cols-[1fr_2fr]'>
-            <p>Chicago </p>
-            <p className='grid gap-4 text-sm'>{citation('Chicago')}</p>
-          </div>
-          <div className='grid grid-cols-[1fr_2fr]'>
-            <p>IEEE </p>
-            <p className='grid gap-4 text-sm'>{citation('IEEE')}</p>
-          </div>
+          {citationFormats.map((format, idx) => (
+            <div className='grid grid-cols-[1fr_2fr]' key={idx}>
+              <p>{`${format} `} </p>
+              <div
+                className='overflow-y-auto max-h-[150px] hover:text-teal-500 hover:cursor-pointer hover:transition-colors hover:duration-150'
+                onClick={() => handleCopyClick(idx)}
+              >
+                <p
+                  className='grid gap-4 text-sm'
+                  ref={(el) => (textRefs.current[idx] = el) as any}
+                >
+                  {citation(format)}
+                </p>
+                <span>
+                  <Clipboard size={16} />
+                </span>
+              </div>
+            </div>
+          ))}
         </Card>
       </Modal>
     </>

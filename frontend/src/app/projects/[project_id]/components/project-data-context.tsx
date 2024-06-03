@@ -29,7 +29,7 @@ interface ProjectDataContextProps {
   setFetchArticles?: (articles: Article[]) => void;
   urls?: string[];
   summaryList?: Summary[];
-  websocketProps?: UseWebSocketChatProps;
+  websocketProps: UseWebSocketChatProps;
 }
 
 const ProjectDataContext = createContext<ProjectDataContextProps | undefined>(

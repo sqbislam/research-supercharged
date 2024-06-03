@@ -2,6 +2,7 @@
 import { Article } from '@/lib/types';
 import { getDate } from '@/lib/utils';
 
+export type CitationFormat = 'APA' | 'MLA' | 'Chicago' | 'IEEE';
 export default function CitationGenerator({ article }: { article: Article }) {
   const formatAuthors = (
     authors: string[],

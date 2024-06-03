@@ -7,10 +7,8 @@ import Suggestions from './suggestions';
 import { useProjectData } from '../[project_id]/components/project-data-context';
 
 export default function ChatPage() {
-  const { urls, websocketProps } = useProjectData();
+  const { websocketProps } = useProjectData();
   const {
-    chatHistory,
-    websckt,
     message,
     setMessage,
     messages,
