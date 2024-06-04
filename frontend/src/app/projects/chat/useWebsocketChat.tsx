@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-
+import { toast } from 'react-toastify';
 interface Message {
   type?: string;
   content?: string;
@@ -76,6 +76,10 @@ const useWebSocketChat = (urls: string[]): UseWebSocketChatProps => {
 
       if ('type' in message && message.type == 'ai') {
         setProcessing(false);
+      }
+      if ('type' in message && message.type == 'error') {
+        setProcessing(false);
+        toast.error('Error in processing the message. Please try again');
       }
       setMessages((messagesArr) => [...messagesArr, message]);
     };

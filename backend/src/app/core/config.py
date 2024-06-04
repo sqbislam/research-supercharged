@@ -35,6 +35,10 @@ class Settings(BaseSettings):
     SUPABASE_KEY: str = Field(default_factory=lambda: os.getenv("SUPABASE_KEY"))
     SUPERUSER_EMAIL: str = Field(default_factory=lambda: os.getenv("SUPERUSER_EMAIL"))
     SUPERUSER_PASSWORD: str = Field(default=lambda: os.getenv("SUPERUSER_PASSWORD"))
+    
+    ## Auth Settings
+    JWT_SECRET: str = Field(default_factory=lambda: os.getenv("JWT_SECRET"))
+    JWT_ALGORITHM: str = Field(default_factory=lambda: os.getenv("JWT_ALGORITHM"))
     # SERVER_NAME: str
     SERVER_HOST: AnyHttpUrl = "https://localhost"
     SERVER_PORT: int = 8000

@@ -53,6 +53,7 @@ export default function ArticlesList({
     } finally {
       setLoading(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery, maxResult]);
   return (
     <div>
