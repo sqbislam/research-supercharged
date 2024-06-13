@@ -13,7 +13,7 @@
   <p>
     
 
-Research is time-consuming, collecting and synthesizing information from a hundred articles can be daunting. For the past few weeks, I have been working on building a tool that can assist in doing the above efficiently and make the life of a researcher a bit easier.
+Research is time-consuming, collecting and synthesizing information from a hundred articles can be daunting. This is a tool that can assist in doing the above efficiently and make the life of a researcher a bit easier. 
 Presenting to you IntelliResearch. This is a proof of concept (PoC) which acts as a research assistant and manager, designed to transform your research experience. IntelliResearch offers features like:
 
   - Smart Article Search: Effortlessly find the most relevant articles and research papers with our advanced AI search functionality.
