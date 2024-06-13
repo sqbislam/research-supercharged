@@ -12,8 +12,8 @@
   
 <h4>Demo</h4>
 
-![![Watch this video]("https://cdn.loom.com/sessions/thumbnails/2027adcf39ff4477a6c5705b2a9ecd65-1717449312718-with-play.gif")](https://www.loom.com/share/2027adcf39ff4477a6c5705b2a9ecd65?sid=bb220371-03ae-4818-8d55-219c139db9bd)
 
+https://github.com/sqbislam/research-supercharged/assets/29769759/baefd2b4-ef4c-4302-a272-b59b377ff7c8
 
 
 ## Features
