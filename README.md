@@ -1,4 +1,4 @@
-# Next.js + Tailwind CSS + TypeScript Starter and Boilerplate
+# Empowering Intelligent Research
 
 <div align="center">
   <h2>🔋 Research Supercharged</h2>
